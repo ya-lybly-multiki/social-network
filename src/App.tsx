@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
+import React from "react";
 import './App.css';
+import Header from "./components/Header/Header";
+import Navbar from "./components/Navbar/Navbar";
+import Profile from "./components/Profile/Profile";
+import Dialogs from "./components/Dialogs/Dialogs";
+import {BrowserRouter, Route,} from "react-router-dom";
+import news from "./components/News/News";
+import music from "./components/Music/Music";
+import settings from "./components/Settings/Settings";
+import Friends from "./components/Friends/Friends";
+import { StoreType} from "./Redux/State";
+import Sidebar from "./components/Sidebar/Sidebar";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+type PropsType = {
+    store: StoreType
+
+}
+
+
+const App: React.FC<PropsType> = (props) => {
+
+    const state = props.store.getState()
+
+
+    return (
+        <BrowserRouter>
+            <div className="app__wrapper">
+                <Header/>
+                <Navbar state={props.store._state.sideBar}/>
+                <div className='app__wrapper_content'>
+                    <Route path='/dialogs' render={() => <Dialogs state={state.messagesPage}/>}/>
+                    <Route path='/profile'
+                           render={() => <Profile state={state.profilePage}
+                                                addPost={props.store.addPost.bind(props.store)}
+                                                  changeNewText={props.store.changeNewText.bind(props.store)}
+
+                           />}/>
+                    <Route path='/news' component={news}/>
+                    <Route path='/music' component={music}/>
+                    <Route path='/settings' component={settings}/>
+                    <Route path='/Friends' component={Friends}/>
+                    <Route path='/Sidebar' component={Sidebar}/>
+                </div>
+            </div>
+        </BrowserRouter>
+    );
 }
 
 export default App;

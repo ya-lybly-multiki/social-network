@@ -1,0 +1,22 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+}
+
+.dialogs__wrapper {
+
+}
+
+.dialogs {
+    padding: 10px;
+}
+
+
+
+.message__wrapper {
+
+}
+
+.messages {
+    padding-top: 10px;
+}

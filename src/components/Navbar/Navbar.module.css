@@ -1,0 +1,35 @@
+.nav {
+    grid-area: n;
+    background-color: pink;
+    padding: 20px;
+}
+
+.item a {
+    color: white;
+    text-decoration: none;
+
+}
+
+.item  {
+    list-style-type: none;
+}
+
+ul {
+    padding: 0;
+}
+
+.item a.active {
+    color: gold;
+}
+
+.nav__bottom {
+    display: flex;
+    flex-direction: column;
+    height: 38%;
+    justify-content: space-evenly;
+}
+
+.slidebar__wrapper{
+    display: flex;
+    padding: 0;
+}

@@ -1,0 +1,18 @@
+.dialog__item {
+    list-style-type: none;
+    margin-bottom: 5px;
+
+}
+.dialog__item a {
+    text-decoration: none;
+}
+
+.active {
+    color: gold;
+}
+
+.dialog__item img {
+    width: 30px;
+    border-radius: 50%;
+    padding-right: 5px;
+}
