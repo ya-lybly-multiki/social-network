@@ -41,6 +41,18 @@ export type SideBarType = {
     friends: Array<FriendsType>
 }
 
+type ChangeNewTextActionType = {
+    type:"CHANGE-NEW-TEXT"
+    newText: string
+}
+
+type AddPostActionType = {
+    type: "ADD-POST"
+    postText: string
+}
+
+export type ActionTypes = AddPostActionType | ChangeNewTextActionType
+
 
 
 const store: StoreType = {
@@ -115,8 +127,9 @@ const store: StoreType = {
     },
     changeNewText  (newText:string)  {
         this._state.profilePage.messageForNewPost = newText
-        this._onChange()
+        this._callSubscriber()
     },
+
     addPost  (postText: string)  {
 
         const newPost: PostType = {
@@ -125,16 +138,32 @@ const store: StoreType = {
             likeCounts: 0
         }
         this._state.profilePage.posts.push(newPost)
-        this._onChange()
+        this._callSubscriber()
     },
+
     subscribe  (callback: () => void)  {
-        this._onChange = callback
+        this._callSubscriber = callback
     },
-    _onChange ()  {
+    _callSubscriber ()  {
         console.log("state changed")
     },
     getState () {
         return this._state
+    },
+
+    dispatch(action) {
+        if (action.type === "ADD-POST") {
+            const newPost: PostType = {
+                id: 5,
+                message: action.postText,
+                likeCounts: 0
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._callSubscriber()
+        } else if (action.type === "CHANGE-NEW-TEXT") {
+            this._state.profilePage.messageForNewPost = action.newText
+            this._callSubscriber()
+        }
     }
 }
 
@@ -143,11 +172,9 @@ export type StoreType = {
     changeNewText:(newTest:string) => void
     addPost: (postText: string) => void
     subscribe: (callback:() => void) => void
-    _onChange: () => void
+    _callSubscriber: () => void
     getState: () => RootStateType
+    dispatch : (action: ActionTypes) => void
 }
-
-
-
 
 export default store;
