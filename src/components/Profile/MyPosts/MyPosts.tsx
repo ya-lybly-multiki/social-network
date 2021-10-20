@@ -2,6 +2,7 @@ import React, {ChangeEvent, useState} from "react";
 import classes from './MyPosts.module.css'
 import Posts from "./Post/Posts";
 import {ActionTypes, PostType} from "../../../Redux/State";
+import {addPostAc, changeNewText} from "../../../Redux/Profile-reduser";
 
 type PropsType = {
     posts: Array<PostType>
@@ -11,6 +12,9 @@ type PropsType = {
     dispatch : (action: ActionTypes) => void
 }
 
+
+
+
 function MyPosts(props: PropsType) {
 
 
@@ -18,13 +22,12 @@ function MyPosts(props: PropsType) {
         <Posts message={p.message} likeCounts={p.likeCounts}/>)
 
     const addPost = () => {
-        props.dispatch({type: "ADD-POST", postText: props.message})
-        // props.addPost(props.message)
+        props.dispatch(addPostAc(props.message))
+
     }
 
     const changeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch({type:"CHANGE-NEW-TEXT", newText:(e.currentTarget.value)})
-        // props.changeNewTextCallback(e.currentTarget.value)
+        props.dispatch(changeNewText(e.currentTarget.value))
     }
 
     return (

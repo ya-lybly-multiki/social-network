@@ -1,3 +1,6 @@
+import ProfileReducer, {addPostAc, changeNewText} from "./Profile-reduser";
+import DialogsReducer from "./Dialogs-reduser";
+
 export type PostType = {
     id: number
     message: string
@@ -29,6 +32,7 @@ export type ProfilePageType = {
 export type MessagesPageType = {
     messages: Array<MessagesType>
     dialogs: Array<DialogsType>
+    newMessageBody: string
 }
 
 export type RootStateType = {
@@ -41,17 +45,26 @@ export type SideBarType = {
     friends: Array<FriendsType>
 }
 
-type ChangeNewTextActionType = {
-    type:"CHANGE-NEW-TEXT"
-    newText: string
+
+export type StoreType = {
+    _state: RootStateType
+    changeNewText:(newTest:string) => void
+    addPost: (postText: string) => void
+    subscribe: (callback:() => void) => void
+    _callSubscriber: () => void
+    getState: () => RootStateType
+    dispatch : (action: ActionTypes) => void
 }
 
-type AddPostActionType = {
-    type: "ADD-POST"
-    postText: string
-}
+
+export type AddPostActionType = ReturnType<typeof addPostAc>
+
+export type ChangeNewTextActionType = ReturnType<typeof changeNewText>
+
+
 
 export type ActionTypes = AddPostActionType | ChangeNewTextActionType
+    | sendMessageCreatorType | updateNewMessageBodyPostCreatorType
 
 
 
@@ -104,7 +117,8 @@ const store: StoreType = {
                     name: "Dimych",
                     avatar: "https://kopilkasovetov.com/wp-content/uploads/2013/06/kak-sdelat-chat-besplatno-600x600.jpg"
                 }
-            ]
+            ],
+            newMessageBody : " "
         },
         sideBar: {
             friends: [{
@@ -152,29 +166,28 @@ const store: StoreType = {
     },
 
     dispatch(action) {
-        if (action.type === "ADD-POST") {
-            const newPost: PostType = {
-                id: 5,
-                message: action.postText,
-                likeCounts: 0
-            }
-            this._state.profilePage.posts.push(newPost)
-            this._callSubscriber()
-        } else if (action.type === "CHANGE-NEW-TEXT") {
-            this._state.profilePage.messageForNewPost = action.newText
-            this._callSubscriber()
-        }
+
+        this._state.profilePage = ProfileReducer(this._state.profilePage, action)
+        this._state.messagesPage = DialogsReducer(this._state.messagesPage,action)
+        this._callSubscriber()
     }
 }
 
-export type StoreType = {
-    _state: RootStateType
-    changeNewText:(newTest:string) => void
-    addPost: (postText: string) => void
-    subscribe: (callback:() => void) => void
-    _callSubscriber: () => void
-    getState: () => RootStateType
-    dispatch : (action: ActionTypes) => void
+
+
+
+
+export type sendMessageCreatorType = {
+    type: "UPDATE-NEW-MESSAGE"
 }
+
+
+
+export type updateNewMessageBodyPostCreatorType = {
+    type: "SEND-MESSAGE",
+    body:string
+}
+
+
 
 export default store;

@@ -23,13 +23,16 @@ const App: React.FC<PropsType> = (props) => {
     const state = props.store.getState()
 
 
+
     return (
         <BrowserRouter>
             <div className="app__wrapper">
                 <Header/>
                 <Navbar state={props.store._state.sideBar}/>
                 <div className='app__wrapper_content'>
-                    <Route path='/dialogs' render={() => <Dialogs state={state.messagesPage}/>}/>
+                    <Route path='/dialogs' render={() => <Dialogs 
+                        dispatch={props.store.dispatch.bind(props.store)}
+                        state={state.messagesPage}/>}/>
                     <Route path='/profile'
                            render={() => <Profile state={state.profilePage}
                                                   dispatch ={props.store.dispatch.bind(props.store)}
