@@ -9,7 +9,7 @@ import news from "./components/News/News";
 import music from "./components/Music/Music";
 import settings from "./components/Settings/Settings";
 import Friends from "./components/Friends/Friends";
-import { StoreType} from "./Redux/State";
+import { StoreType} from "./Redux/Store";
 import Sidebar from "./components/Sidebar/Sidebar";
 
 type PropsType = {
