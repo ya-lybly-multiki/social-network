@@ -15,7 +15,7 @@ type PropsType = {
 
 
 
-function MyPosts(props: PropsType) {
+function MyPostContainer(props: PropsType) {
 
 
     const postArray = props.posts.map((p) =>
@@ -41,4 +41,4 @@ function MyPosts(props: PropsType) {
     )
 }
 
-export default MyPosts;
+export default MyPostContainer;

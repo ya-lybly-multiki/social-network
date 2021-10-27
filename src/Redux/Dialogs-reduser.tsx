@@ -1,20 +1,58 @@
 import React from "react";
 import {
-    ActionTypes, DialogsType, MessagesPageType,
-    PostType, ProfilePageType,
-    RootStateType,
+    ActionTypes, MessagesPageType,
+
     sendMessageCreatorType,
     updateNewMessageBodyPostCreatorType
-} from "./State";
+} from "./Store";
 
-type PropsType = {
-    action: ActionTypes
-    state: MessagesPageType
 
+let initialState:MessagesPageType = {
+    messages: [
+        {id: 1, message: "privet kotik"},
+        {id: 2, message: "Pudge ss"},
+        {id: 3, message: "Idi rabotai"},
+        {id: 4, message: "Hm ya lol"},
+        {id: 5, message: "Ti gde?"},
+        {id: 6, message: "Bombim Dalshe"}
+    ],
+    dialogs: [
+        {
+            id: 1,
+            name: "Sonya Kisulka",
+            avatar: "https://greatchat.ru/wp-content/uploads/2018/07/menyaem-avatar-v-telegramm1.jpg"
+        },
+        {
+            id: 2,
+            name: "Nikita",
+            avatar: "https://whatsism.com/uploads/posts/2018-05/thumbs/1525374264_7f85e7b.jpeg"
+        },
+        {
+            id: 3,
+            name: "Alexander",
+            avatar: "https://whatsism.com/uploads/posts/2018-05/thumbs/1525373578_va_pikachu.jpg"
+        },
+        {
+            id: 4,
+            name: "Zakhar",
+            avatar: "https://i.pinimg.com/236x/74/05/5f/74055f83bfbdc20fdc1f9d1fc116fd26.jpg"
+        },
+        {
+            id: 5,
+            name: "Natasha",
+            avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKoEfDinRCmMj06Zu45Lh0E3wA9545JQvYQQ&usqp=CAU"
+        },
+        {
+            id: 6,
+            name: "Dimych",
+            avatar: "https://kopilkasovetov.com/wp-content/uploads/2013/06/kak-sdelat-chat-besplatno-600x600.jpg"
+        }
+    ],
+    newMessageBody : " "
 }
 
 
-const DialogsReducer = (state:MessagesPageType, action:ActionTypes) => {
+const DialogsReducer = (state = initialState, action:ActionTypes) => {
         switch (action.type) {
             case "SEND-MESSAGE":
                 state.newMessageBody = action.body;
