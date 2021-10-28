@@ -1,4 +1,4 @@
-import ProfileReducer, {addPostAc, changeNewText} from "./Profile-reduser";
+import ProfileReducer, {addPostAC, changeNewTextAC} from "./Profile-reduser";
 import DialogsReducer from "./Dialogs-reduser";
 
 export type PostType = {
@@ -57,9 +57,9 @@ export type StoreType = {
 }
 
 
-export type AddPostActionType = ReturnType<typeof addPostAc>
+export type AddPostActionType = ReturnType<typeof addPostAC>
 
-export type ChangeNewTextActionType = ReturnType<typeof changeNewText>
+export type ChangeNewTextActionType = ReturnType<typeof changeNewTextAC>
 
 
 
