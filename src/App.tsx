@@ -11,6 +11,7 @@ import settings from "./components/Settings/Settings";
 import Friends from "./components/Friends/Friends";
 import { StoreType} from "./Redux/Store";
 import Sidebar from "./components/Sidebar/Sidebar";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 type PropsType = {
     store: StoreType
@@ -30,7 +31,7 @@ const App: React.FC<PropsType> = (props) => {
                 <Header/>
                 <Navbar state={props.store._state.sideBar}/>
                 <div className='app__wrapper_content'>
-                    <Route path='/dialogs' render={() => <Dialogs 
+                    <Route path='/dialogs' render={() => <DialogsContainer
                         dispatch={props.store.dispatch.bind(props.store)}
                         state={state.messagesPage}/>}/>
                     <Route path='/profile'
