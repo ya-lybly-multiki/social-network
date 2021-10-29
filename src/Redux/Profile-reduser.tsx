@@ -4,7 +4,7 @@ import {
 
 
 let initialState: ProfilePageType = {
-        messageForNewPost: " ",
+        messageForNewPost: "",
         posts: [
             {id: 1, message: "hello everybody", likeCounts: 12},
             {id: 2, message: "its my first post", likeCounts: 13}
@@ -33,7 +33,6 @@ const ProfileReducer = (state = initialState, action: ActionTypes): ProfilePageT
 export const addPostAC = () => {
     return {
         type: "ADD-POST",
-
     } as const
 }
 

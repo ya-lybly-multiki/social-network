@@ -1,4 +1,4 @@
-import React, {ChangeEvent, createRef, useState} from "react";
+import React, {ChangeEvent} from "react";
 import classes from './MyPosts.module.css'
 import Posts from "./Post/Posts";
 import { PostType} from "../../../Redux/Store";
@@ -16,8 +16,6 @@ type PropsType = {
 
 function MyPosts(props: PropsType) {
 
-    const newPostElement = createRef<HTMLTextAreaElement>()
-
     const postArray = props.posts.map((p) =>
         <Posts message={p.message} likeCounts={p.likeCounts}/>)
 
@@ -25,8 +23,10 @@ function MyPosts(props: PropsType) {
 
 
     const changeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        const current = e.currentTarget.value
+
+        let current = e.currentTarget.value
             props.changeNewTextCallback(current)
+        console.log(current)
     }
 
     return (
