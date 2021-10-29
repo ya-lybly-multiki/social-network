@@ -1,29 +1,26 @@
 import React from "react";
 import MyPosts from "./MyPosts";
-import {ActionTypes, PostType} from "../../../Redux/Store";
-import {addPostAC,  changeNewTextAC} from "../../../Redux/Profile-reduser";
+import {addPostAC, changeNewTextAC} from "../../../Redux/Profile-reduser";
+import StoreContext from "../../../StoreContext";
 
 
-type PropsType = {
-    posts: Array<PostType>
-    message: string
-    dispatch : (action: ActionTypes) => void
-}
+export const MyPostsContainer: React.FC = (props) => {
 
-export const MyPostsContainer: React.FC<PropsType> = ({posts, ...props}) => {
 
-    const addPost = () => {
-
-        props.dispatch(addPostAC())
-     }
-    const updateNewPostText = (text: string) => {
-        props.dispatch(changeNewTextAC(text))
-    }
-
-    return (<MyPosts posts={posts}
-                 message={props.message}
-                 changeNewTextCallback={updateNewPostText}
-                 addPost={addPost}
-        />
+    return (<StoreContext.Consumer>
+            {
+                (store) => {
+                    const addPost = () => store.dispatch(addPostAC())
+                    const updateNewPostText = (text: string) => {
+                        store.dispatch(changeNewTextAC(text))
+                    }
+                    return <MyPosts posts={store.getState().profilePage.posts}
+                                    message={store.getState().profilePage.messageForNewPost}
+                                    changeNewTextCallback={updateNewPostText}
+                                    addPost={addPost}
+                    />
+                }
+            }
+        </StoreContext.Consumer>
     )
 }

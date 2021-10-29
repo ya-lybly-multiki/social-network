@@ -3,25 +3,22 @@ import './App.css';
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
-import Dialogs from "./components/Dialogs/Dialogs";
+
 import {BrowserRouter, Route,} from "react-router-dom";
 import news from "./components/News/News";
 import music from "./components/Music/Music";
 import settings from "./components/Settings/Settings";
 import Friends from "./components/Friends/Friends";
-import { StoreType} from "./Redux/Store";
+
 import Sidebar from "./components/Sidebar/Sidebar";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
-type PropsType = {
-    store: StoreType
-
-}
 
 
-const App: React.FC<PropsType> = (props) => {
 
-    const state = props.store.getState()
+const App: React.FC = (props) => {
+
+
 
 
 
@@ -29,18 +26,12 @@ const App: React.FC<PropsType> = (props) => {
         <BrowserRouter>
             <div className="app__wrapper">
                 <Header/>
-                <Navbar state={props.store._state.sideBar}/>
+                <Navbar />
                 <div className='app__wrapper_content'>
-                    <Route path='/dialogs' render={() => <DialogsContainer
-                        dispatch={props.store.dispatch.bind(props.store)}
-                        state={state.messagesPage}/>}/>
+                    <Route path='/dialogs'
+                           render={() => <DialogsContainer/>}/>
                     <Route path='/profile'
-                           render={() => <Profile state={state.profilePage}
-                                                  dispatch ={props.store.dispatch.bind(props.store)}
-                                                addPost={props.store.addPost.bind(props.store)}
-                                                  changeNewText={props.store.changeNewText.bind(props.store)}
-
-                           />}/>
+                           render={() => <Profile/>}/>
                     <Route path='/news' component={news}/>
                     <Route path='/music' component={music}/>
                     <Route path='/settings' component={settings}/>
