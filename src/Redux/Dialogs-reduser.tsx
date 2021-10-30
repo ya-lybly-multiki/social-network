@@ -1,13 +1,26 @@
 import React from "react";
-import {
-    ActionTypes, MessagesPageType,
+import {ActionTypes,} from "./Store";
 
-    sendMessageCreatorType,
-    updateNewMessageBodyPostCreatorType
-} from "./Store";
+export type MessageType = {
+    id:number
+    message:string
+}
+
+export type DialogType = {
+    id:number
+    name:string
+    avatar:string
+}
+
+export type DialogsPageType = {
+    dialogs: Array<DialogType>
+    messages:Array<MessageType>
+    newMessageBody:string
+}
 
 
-let initialState:MessagesPageType = {
+
+let initialState:DialogsPageType = {
     messages: [
         {id: 1, message: "privet kotik"},
         {id: 2, message: "Pudge ss"},
@@ -52,7 +65,8 @@ let initialState:MessagesPageType = {
 }
 
 
-const DialogsReducer = (state = initialState, action:ActionTypes) => {
+
+const DialogsReducer = (state = initialState, action:ActionTypes):DialogsPageType => {
         switch (action.type) {
             case "SEND-MESSAGE":
                 state.newMessageBody = action.body;
@@ -67,13 +81,13 @@ const DialogsReducer = (state = initialState, action:ActionTypes) => {
 
 }
 
-export const sendMessageCreator = ():sendMessageCreatorType => {
+export const sendMessageCreator = () => {
     return {
         type:"UPDATE-NEW-MESSAGE"
     } as const
 }
 
-export const updateNewMessageBodyPostCreator = (body: string):updateNewMessageBodyPostCreatorType => {
+export const updateNewMessageBodyPostCreator = (body: string)=> {
     return {
         type: "SEND-MESSAGE",
         body: body

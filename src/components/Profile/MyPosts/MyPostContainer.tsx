@@ -1,26 +1,33 @@
 import React from "react";
 import MyPosts from "./MyPosts";
-import {addPostAC, changeNewTextAC} from "../../../Redux/Profile-reduser";
-import StoreContext from "../../../StoreContext";
+
+import {connect} from "react-redux";
+import {AppStateType} from "../../../Redux/Redux-store";
+import {Dispatch} from "redux";
+import {ActionTypes} from "../../../Redux/Store";
+import {addPostAC, changeNewTextAC, ProfilePageType} from "../../../Redux/Profile-reduser";
 
 
-export const MyPostsContainer: React.FC = (props) => {
+
+    type MapStateToPropsType = {
+        addPost: () => void
+        updateNewPostText:(text:string)=> void
+    }
+
+    const MapStateToProps = (state:AppStateType):ProfilePageType => {
+        return {
+            posts: state.profilePage.posts,
+            messageForNewPost: state.profilePage.messageForNewPost
+        }
+    }
+    const mapDispatchToProps = (dispatch: Dispatch<ActionTypes>):MapStateToPropsType => {
+        return {
+            addPost: () => dispatch(addPostAC()),
+            updateNewPostText : (newText: string) => dispatch(changeNewTextAC(newText))
+
+        }
+    }
+
+    export const MyPostContainer = connect(MapStateToProps,mapDispatchToProps) (MyPosts)
 
 
-    return (<StoreContext.Consumer>
-            {
-                (store) => {
-                    const addPost = () => store.dispatch(addPostAC())
-                    const updateNewPostText = (text: string) => {
-                        store.dispatch(changeNewTextAC(text))
-                    }
-                    return <MyPosts posts={store.getState().profilePage.posts}
-                                    message={store.getState().profilePage.messageForNewPost}
-                                    changeNewTextCallback={updateNewPostText}
-                                    addPost={addPost}
-                    />
-                }
-            }
-        </StoreContext.Consumer>
-    )
-}

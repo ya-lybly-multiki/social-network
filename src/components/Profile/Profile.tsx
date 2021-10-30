@@ -1,6 +1,7 @@
 import React from "react";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {MyPostsContainer} from "./MyPosts/MyPostContainer";
+import {MyPostContainer} from "./MyPosts/MyPostContainer";
+
 
 
 
@@ -9,7 +10,7 @@ function Profile() {
     return (
         <div>
             <ProfileInfo/>
-            <MyPostsContainer/>
+            <MyPostContainer  />
         </div>
 
     )

@@ -3,10 +3,10 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import ReactDOM from "react-dom";
 import App from "./App";
-
 import {BrowserRouter} from "react-router-dom";
-import store from "./Redux/Store";
-import {Provider} from "./StoreContext";
+import {Provider} from "react-redux";
+import store from "./Redux/Redux-store";
+
 
 
 export let rerenderEntireTree = () => {

@@ -7,8 +7,8 @@ import { PostType} from "../../../Redux/Store";
 type PropsType = {
     posts: Array<PostType>
     addPost: () => void
-    message: string
-    changeNewTextCallback:(newText: string) => void
+    messageForNewPost: string
+    updateNewPostText:(newText: string) => void
 }
 
 
@@ -23,16 +23,14 @@ function MyPosts(props: PropsType) {
 
 
     const changeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-
         let current = e.currentTarget.value
-            props.changeNewTextCallback(current)
-        console.log(current)
+            props.updateNewPostText(current)
     }
 
     return (
         <div className={classes.posts}>
             <h3>My posts</h3>
-            <textarea value={props.message}
+            <textarea value={props.messageForNewPost}
                       onChange={ changeHandler}/>
             <button onClick={OnAddPost}>Add post</button>
             {postArray}

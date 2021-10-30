@@ -1,6 +1,18 @@
 import {
-    ActionTypes, PostType, ProfilePageType,
+    ActionTypes,
 } from "./Store";
+
+
+export type postType = {
+    id:number
+    message:string
+    likeCounts:number
+}
+
+export type ProfilePageType = {
+    messageForNewPost:string
+    posts: Array<postType>
+}
 
 
 let initialState: ProfilePageType = {
@@ -15,8 +27,8 @@ const ProfileReducer = (state = initialState, action: ActionTypes): ProfilePageT
 
     switch (action.type) {
         case "ADD-POST":
-            const newPost: PostType = {
-                id: 5,
+            const newPost: postType = {
+                id: Math.random() * 100,
                 message: state.messageForNewPost,
                 likeCounts: 0
             };
@@ -29,6 +41,9 @@ const ProfileReducer = (state = initialState, action: ActionTypes): ProfilePageT
             return state
     }
 }
+
+
+
 
 export const addPostAC = () => {
     return {
