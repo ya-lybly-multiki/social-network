@@ -1,31 +1,34 @@
 import React from "react";
-import {sendMessageCreator, updateNewMessageBodyPostCreator} from "../../Redux/Dialogs-reduser";
+import {DialogsPageType, sendMessageCreator, updateNewMessageBodyPostCreator} from "../../Redux/Dialogs-reduser";
 import Dialogs from "./Dialogs";
-import StoreContext from "../../StoreContext";
+import {connect} from "react-redux";
+import {AppStateType} from "../../Redux/Redux-store";
+import {Dispatch} from "redux";
+import {ActionTypes} from "../../Redux/Store";
 
 
-function DialogsContainer() {
+    type MapStateToPropsType = {
+        onNewMessageClick:()=> void
+        onSendMessageGhange:  (body: string) =>void
+    }
 
-    return (<StoreContext.Consumer>
-            {
-                (store) => {
-                    const onNewMessageClick = () => {
-                        store.dispatch(sendMessageCreator())
-                    }
+    const MapStateToProps = (state:AppStateType):DialogsPageType => {
+        return {
+            dialogs: state.messagesPage.dialogs,
+            messages: state.messagesPage.messages,
+            newMessageBody:state.messagesPage.newMessageBody
 
-                    const onSendMessageGhange = (body: string) => {
-                        store.dispatch(updateNewMessageBodyPostCreator(body))
-                    }
+        }
+    }
 
-                    return <Dialogs dialogs={store.getState().messagesPage.dialogs}
-                                    messages={store.getState().messagesPage.messages}
-                                    newMessageBody={store.getState().messagesPage.newMessageBody}
-                                    onNewMessageClick={onNewMessageClick}
-                                    onSendMessageGhange={onSendMessageGhange}/>
-                }
-            }
-        </StoreContext.Consumer>
-    )
-}
+    const mapDispatchToProps = (dispatch: Dispatch<ActionTypes>):MapStateToPropsType => {
+        return {
+            onNewMessageClick: () => dispatch(sendMessageCreator()),
+             onSendMessageGhange:  (body: string) => dispatch(updateNewMessageBodyPostCreator(body))
+        }
+    }
 
-export default DialogsContainer;
+    const DialogContainer = connect(MapStateToProps, mapDispatchToProps) (Dialogs)
+
+
+export default DialogContainer;
