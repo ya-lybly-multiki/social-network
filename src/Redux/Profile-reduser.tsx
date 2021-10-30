@@ -32,13 +32,16 @@ const ProfileReducer = (state = initialState, action: ActionTypes): ProfilePageT
                 message: state.messageForNewPost,
                 likeCounts: 0
             };
-            state.posts.push(newPost)
-            return state
+            return {
+                ...state,
+            posts:[...state.posts,{...newPost}]
+            };
         case "CHANGE-NEW-TEXT":
-            state.messageForNewPost = action.newText
-            return state
-        default:
-            return state
+            return {
+                ...state,
+                messageForNewPost:action.newText
+            }
+        default:return state
     }
 }
 

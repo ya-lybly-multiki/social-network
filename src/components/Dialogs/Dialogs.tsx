@@ -25,7 +25,6 @@ function Dialogs(props: PropsType) {
     const onSendMessageGhangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.currentTarget.value
        props.onSendMessageGhange(body)
-        console.log(body)
     }
 
     return (
