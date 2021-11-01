@@ -2,12 +2,13 @@ import React, {ChangeEvent} from "react";
 import classes from './Dialogs.module.css';
 import DialogItem from "./Dialogsitem/DialogItem";
 import Messages from "./Messages/Messages";
-import { DialogsType,  MessagesType} from "../../Redux/Store";
+import {DialogType, MessageType} from "../../Redux/Dialogs-reduser";
+
 
 
 type PropsType = {
-    dialogs: Array<DialogsType>
-    messages: Array<MessagesType>
+    dialogs: Array<DialogType>
+    messages: Array<MessageType>
     onNewMessageClick:()=> void
     newMessageBody:string
     onSendMessageGhange:(body:string)=> void

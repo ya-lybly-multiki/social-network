@@ -8,8 +8,6 @@ import {Provider} from "react-redux";
 import store from "./Redux/Redux-store";
 
 
-
-export let rerenderEntireTree = () => {
     ReactDOM.render(
         <BrowserRouter>
             <Provider store={store}>
@@ -18,12 +16,8 @@ export let rerenderEntireTree = () => {
         </BrowserRouter>,
         document.getElementById('root')
     );
-}
 
 
-store.subscribe(() => {
-    rerenderEntireTree()
-})
-rerenderEntireTree()
+
 
 reportWebVitals();

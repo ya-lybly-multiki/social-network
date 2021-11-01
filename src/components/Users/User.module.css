@@ -1,0 +1,41 @@
+.userAvatar {
+    width: 100px;
+    height: 100px;
+}
+
+.btnFollow {
+    color: green;
+    padding: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.btnUnFollow {
+    color: red;
+    padding: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.infoUser {
+    border: 2px solid aqua;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+
+.userBlock {
+    display: flex;
+    width: 10%;
+    flex-direction: column;
+    margin-right: 5%;
+}
+
+.userProfile {
+    display: flex;
+    margin-bottom: 3%;
+}
+
+.usersPage {
+    padding: 20px;
+}

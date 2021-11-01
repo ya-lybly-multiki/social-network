@@ -1,11 +1,12 @@
 import React, {ChangeEvent} from "react";
 import classes from './MyPosts.module.css'
 import Posts from "./Post/Posts";
-import { PostType} from "../../../Redux/Store";
+import {postType} from "../../../Redux/Profile-reduser";
+
 
 
 type PropsType = {
-    posts: Array<PostType>
+    posts: Array<postType>
     addPost: () => void
     messageForNewPost: string
     updateNewPostText:(newText: string) => void

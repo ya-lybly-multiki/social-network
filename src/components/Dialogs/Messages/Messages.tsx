@@ -1,6 +1,5 @@
 import React from "react";
 import classes from "./Messages.module.css";
-import {MessagesPageType} from "../../../Redux/Store";
 
 type PropsType = {
     message:string

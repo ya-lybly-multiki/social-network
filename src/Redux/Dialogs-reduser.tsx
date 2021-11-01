@@ -1,5 +1,3 @@
-import React from "react";
-import {ActionTypes,} from "./Store";
 
 export type MessageType = {
     id:number
@@ -66,10 +64,9 @@ let initialState:DialogsPageType = {
 
 
 
-const DialogsReducer = (state = initialState, action:ActionTypes):DialogsPageType => {
+const DialogsReducer = (state = initialState, action:FinalType):DialogsPageType => {
         switch (action.type) {
             case "SEND-MESSAGE":
-
                 return {
                     ...state,
                     newMessageBody:action.body
@@ -79,9 +76,6 @@ const DialogsReducer = (state = initialState, action:ActionTypes):DialogsPageTyp
                     id:Math.random() * 100,
                     message:state.newMessageBody
                 }
-                let body = state.newMessageBody;
-                state.newMessageBody = "";
-                state.messages.push({id: 6, message : body})
                 return {
                     ...state,
                 newMessageBody: "",
@@ -89,8 +83,13 @@ const DialogsReducer = (state = initialState, action:ActionTypes):DialogsPageTyp
                 };
             default: return state
         }
-
 }
+
+export type sendMessageCreatorType = ReturnType<typeof sendMessageCreator>
+export type updateNewMessageBodyPostCreatorType = ReturnType<typeof updateNewMessageBodyPostCreator>
+
+export type FinalType = sendMessageCreatorType | updateNewMessageBodyPostCreatorType
+
 
 export const sendMessageCreator = () => {
     return {
