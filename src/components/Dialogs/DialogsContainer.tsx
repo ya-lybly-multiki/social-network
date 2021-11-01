@@ -1,10 +1,14 @@
 import React from "react";
-import {DialogsPageType, sendMessageCreator, updateNewMessageBodyPostCreator} from "../../Redux/Dialogs-reduser";
+import {
+    DialogsPageType,
+    FinalType,
+    sendMessageCreator,
+    updateNewMessageBodyPostCreator
+} from "../../Redux/Dialogs-reduser";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {AppStateType} from "../../Redux/Redux-store";
 import {Dispatch} from "redux";
-import {ActionTypes} from "../../Redux/Store";
 
 
     type MapStateToPropsType = {
@@ -21,7 +25,7 @@ import {ActionTypes} from "../../Redux/Store";
         }
     }
 
-    const mapDispatchToProps = (dispatch: Dispatch<ActionTypes>):MapStateToPropsType => {
+    const mapDispatchToProps = (dispatch: Dispatch<FinalType>):MapStateToPropsType => {
         return {
             onNewMessageClick: () => dispatch(sendMessageCreator()),
              onSendMessageGhange:  (body: string) => dispatch(updateNewMessageBodyPostCreator(body))

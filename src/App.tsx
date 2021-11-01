@@ -10,6 +10,7 @@ import settings from "./components/Settings/Settings";
 import Friends from "./components/Friends/Friends";
 import Sidebar from "./components/Sidebar/Sidebar";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import UsersContainer from "./components/Users/UsersContainer";
 
 
 
@@ -27,6 +28,8 @@ const App: React.FC = () => {
                            render={() => <DialogsContainer />}/>
                     <Route path='/profile'
                            render={() => <Profile/>}/>
+                    <Route path='/users'
+                           render={() => <UsersContainer/>}/>
                     <Route path='/news' component={news}/>
                     <Route path='/music' component={music}/>
                     <Route path='/settings' component={settings}/>

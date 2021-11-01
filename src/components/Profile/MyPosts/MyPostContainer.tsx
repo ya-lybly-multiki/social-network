@@ -4,8 +4,7 @@ import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../Redux/Redux-store";
 import {Dispatch} from "redux";
-import {ActionTypes} from "../../../Redux/Store";
-import {addPostAC, changeNewTextAC, ProfilePageType} from "../../../Redux/Profile-reduser";
+import {addPostAC, changeNewTextAC, ProfilePageType, TsarType} from "../../../Redux/Profile-reduser";
 
 
 
@@ -20,7 +19,7 @@ import {addPostAC, changeNewTextAC, ProfilePageType} from "../../../Redux/Profil
             messageForNewPost: state.profilePage.messageForNewPost
         }
     }
-    const mapDispatchToProps = (dispatch: Dispatch<ActionTypes>):MapStateToPropsType => {
+    const mapDispatchToProps = (dispatch: Dispatch<TsarType>):MapStateToPropsType => {
         return {
             addPost: () => dispatch(addPostAC()),
             updateNewPostText : (newText: string) => dispatch(changeNewTextAC(newText))
