@@ -9,30 +9,7 @@ export type UserType = {
 }
 
 let initialState = {
-    users: [
-        {
-            id: 1,
-            followed: false,
-            fullName: "Artem",
-            status: "Clown",
-            avatar:"https://steamavatar.io/img/14777429717elSu.jpg",
-            location: {
-                city: "Belgorod",
-                country: "Russia"
-            }
-        },
-        {
-            id: 2,
-            followed: true,
-            fullName: "Sofiya",
-            status: "Best of the best",
-            avatar:"https://steamuserimages-a.akamaihd.net/ugc/933814008881052346/EEE5323E6BE686EDC57F8EDFBCC71E6E5117FFE2/",
-            location: {
-                city: "Belgorod",
-                country: "Russia"
-            }
-        }
-    ] as Array<UserType>
+    users: [] as Array<UserType>
 }
 
 export type InitialStateType = typeof initialState
