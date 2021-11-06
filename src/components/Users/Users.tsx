@@ -1,5 +1,5 @@
 import React from "react";
-import {UserType} from "../../Redux/Users-reducer";
+
 import User from "./User";
 import styles from "./User.module.css"
 import axios from "axios";
@@ -11,36 +11,30 @@ type PropsType = {
     setUser: (users: Array<UserType>) => void
 }
 
+export type UserType = {
+    name: string
+    id: number
+    uniqueUrlName: null | string
+    photos: {
+        small: undefined | string
+        large: null | string
+    }
+    status: null | string
+    followed: boolean
+}
+
+export type DataType = {
+    error: null | string
+    totalCount: number
+    items: Array<UserType>
+}
+
 function Users(props: PropsType) {
 
     if (props.users.length === 0) {
-    axios.get(" https://social-network.samuraijs.com/docs/users").then(response => {
-        props.setUser([
-            {
-                id: 1,
-                followed: false,
-                fullName: "Artem",
-                status: "Clown",
-                avatar:"https://steamavatar.io/img/14777429717elSu.jpg",
-                location: {
-                    city: "Belgorod",
-                    country: "Russia"
-                }
-            },
-            {
-                id: 2,
-                followed: true,
-                fullName: "Sofiya",
-                status: "Best of the best",
-                avatar:"https://steamuserimages-a.akamaihd.net/ugc/933814008881052346/EEE5323E6BE686EDC57F8EDFBCC71E6E5117FFE2/",
-                location: {
-                    city: "Belgorod",
-                    country: "Russia"
-                }
-            }
-        ])
+    axios.get(" https://social-network.samuraijs.com/api/1.0/users").then(response => {
+        props.setUser(response.data.items)
     })
-
     }
 
 
@@ -48,17 +42,15 @@ function Users(props: PropsType) {
         <div className={styles.usersPage}>
 
                 {props.users.map(item => {
-
                     return (
                         <User key={item.id}
                               id={item.id}
                               followed={item.followed}
-                              fullName={item.fullName}
+                              fullName={item.name}
                               status={item.status}
-                              location={item.location}
                               toggle={props.toggle}
-                              avatar={item.avatar}
-
+                              photos={item.photos.small}
+                              uniqueUrlName={item.uniqueUrlName}
                         />)
                 })}
             </div>
