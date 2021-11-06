@@ -2,6 +2,7 @@ import React, {ChangeEvent} from "react";
 import classes from './MyPosts.module.css'
 import Posts from "./Post/Posts";
 import {postType} from "../../../Redux/Profile-reduser";
+import {Button} from "../../utils/Button";
 
 
 
@@ -33,7 +34,7 @@ function MyPosts(props: PropsType) {
             <h3>My posts</h3>
             <textarea value={props.messageForNewPost}
                       onChange={ changeHandler}/>
-            <button onClick={OnAddPost}>Add post</button>
+            <Button name={"Add post"} callBack={OnAddPost}/>
             {postArray}
         </div>
     )

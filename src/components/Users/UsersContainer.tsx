@@ -1,14 +1,14 @@
 import React from "react";
 import {connect} from "react-redux";
-import Users from "./Users";
+import Users  from "./Users";
 import {AppStateType} from "../../Redux/Redux-store";
 import {Dispatch} from "redux";
-import {GlobalACType, setUsersAC, toggleAC, UserType} from "../../Redux/Users-reducer";
-
+import {GlobalACType, setUsersAC, toggleAC, UsersType} from "../../Redux/Users-reducer";
 
 
 const MapStateToProps = (state:AppStateType) => {
-  return {
+
+    return {
       users: state.usersPage.users
   }
 }
@@ -16,7 +16,7 @@ const MapStateToProps = (state:AppStateType) => {
 const mapDispatchToProps = (dispatch: Dispatch<GlobalACType>) => {
     return {
         toggle : (userId:number) => dispatch(toggleAC(userId)),
-        setUser: (users:UserType) => dispatch(setUsersAC(users))
+        setUser: (users:UsersType) => dispatch(setUsersAC(users))
     }
 }
 

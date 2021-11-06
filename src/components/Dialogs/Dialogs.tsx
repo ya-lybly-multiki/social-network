@@ -3,6 +3,7 @@ import classes from './Dialogs.module.css';
 import DialogItem from "./Dialogsitem/DialogItem";
 import Messages from "./Messages/Messages";
 import {DialogType, MessageType} from "../../Redux/Dialogs-reduser";
+import {Button} from "../utils/Button";
 
 
 
@@ -42,7 +43,7 @@ function Dialogs(props: PropsType) {
                     </div>
                     <div>
                       <textarea value={newMessageBody} onChange={onSendMessageGhangeHandler}/>
-                        <div><button onClick ={onNewMessageClickHandler}>Send</button></div>
+                        <div><Button name={"Send"} callBack={onNewMessageClickHandler}/></div>
                     </div>
                 </ul>
             </div>

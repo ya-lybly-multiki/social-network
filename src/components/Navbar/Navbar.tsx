@@ -19,6 +19,9 @@ function Navbar() {
                 <li className={classes.item}>
                     <NavLink to='/Dialogs' activeClassName={classes.active}>Messages</NavLink>
                 </li>
+                <li className={classes.item}>
+                    <NavLink to='/Users' activeClassName={classes.active}>Users</NavLink>
+                </li>
                 <li className={`${classes.item} ${classes.active}`}>
                     <NavLink to='/News'>News</NavLink>
                 </li>

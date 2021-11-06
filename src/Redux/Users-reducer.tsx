@@ -1,20 +1,18 @@
+import {UserType} from "../components/Users/Users";
 
-export type UserType = {
-    followed: boolean
-    id: number
-    fullName: string
-    status: string
-    location: {city: string, country: string}
-    avatar:string
+export type UsersType = Array<UserType>
+
+export type UserPageType = {
+    users: UsersType
 }
 
-let initialState = {
-    users: [] as Array<UserType>
+let initialState:UserPageType = {
+    users: []
 }
 
-export type InitialStateType = typeof initialState
 
-const UsersReducer = (state = initialState, action: GlobalACType):InitialStateType  => {
+
+const UsersReducer = (state = initialState, action: GlobalACType):UserPageType  => {
         switch (action.type) {
             case "TOGGLE":
                 return {
@@ -24,15 +22,13 @@ const UsersReducer = (state = initialState, action: GlobalACType):InitialStateTy
             case "SET-USERS":
                 return {
                     ...state,
-                    users: [...state.users, action.users]
+                    users: action.users
                 }
             default: return state
         }
 }
 
 export type GlobalACType = toggleACType |  setUsersACType
-
-
 
 export const toggleAC = (userId:number) => {
     return {
@@ -41,18 +37,14 @@ export const toggleAC = (userId:number) => {
     } as const
 }
 
-
-
-export const setUsersAC = (users:UserType) => {
+export const setUsersAC = (users:UsersType) => {
   return {
       type: "SET-USERS",
-      users:users
+      users
   } as const
 }
 
 export type toggleACType = ReturnType<typeof toggleAC>
-
-
 
 export type setUsersACType = ReturnType<typeof setUsersAC>
 
