@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./User.module.css"
-import UserPhoto from "../../assets/images/TG_Box_Set_Cover.jpg"
+import UserPhoto from "../../../assets/images/TG_Box_Set_Cover.jpg"
 
 type PropsType = {
     id: number

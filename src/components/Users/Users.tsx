@@ -1,7 +1,7 @@
 import React from "react";
-
-import User from "./User";
-import styles from "./User.module.css"
+import s from "./Users.module.css"
+import User from "./User/User";
+import styles from "./User/User.module.css"
 import axios from "axios";
 
 
@@ -9,6 +9,10 @@ type PropsType = {
     users: Array<UserType>
     toggle: (userId: number) => void
     setUser: (users: Array<UserType>) => void
+    pageSize: number
+    totalUserCount: number
+    currentPage: number
+    setCurrentPage:(num: number)=>void
 }
 
 export type UserType = {
@@ -25,35 +29,46 @@ export type UserType = {
 
 export type DataType = {
     error: null | string
-    totalCount: number
+    totalUsersCount: number
     items: Array<UserType>
 }
 
 function Users(props: PropsType) {
 
-    if (props.users.length === 0) {
-    axios.get(" https://social-network.samuraijs.com/api/1.0/users").then(response => {
-        props.setUser(response.data.items)
-    })
-    }
 
+     let pagesCount = (props.totalUserCount / props.pageSize)
+     <= 20 ? Math.ceil(props.totalUserCount / props.pageSize) : 21
+
+    let pages = []
+
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i)
+    }
 
     return (
         <div className={styles.usersPage}>
-
-                {props.users.map(item => {
-                    return (
-                        <User key={item.id}
-                              id={item.id}
-                              followed={item.followed}
-                              fullName={item.name}
-                              status={item.status}
-                              toggle={props.toggle}
-                              photos={item.photos.small}
-                              uniqueUrlName={item.uniqueUrlName}
-                        />)
-                })}
+            <div className={s.numberPages}>
+                {pages.map(num => <span key={num}
+                                      className={props.currentPage === num
+                                          ? `${s.numbersPage} ${s.selected}`: s.numbersPage}
+                onClick={()=>{props.setCurrentPage(num)}}
+                >{num}</span>)}
             </div>
+
+
+            {props.users.map(item => {
+                return (
+                    <User key={item.id}
+                          id={item.id}
+                          followed={item.followed}
+                          fullName={item.name}
+                          status={item.status}
+                          toggle={props.toggle}
+                          photos={item.photos.small}
+                          uniqueUrlName={item.uniqueUrlName}
+                    />)
+            })}
+        </div>
     )
 }
 
