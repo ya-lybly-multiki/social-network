@@ -7,10 +7,10 @@ import {Dispatch} from 'redux';
 
 import {
     GlobalACType,
-    setCurrentPageAC,
-    setTotalUsersCountAC,
-    setUsersAC,
-    toggleAC, toggleIsFetchingAC,
+    setCurrentPage,
+    setTotalUsersCount,
+    setUsers,
+    toggle, toggleIsFetching,
     UsersType
 } from "../../Redux/Users-reducer";
 
@@ -88,14 +88,16 @@ const MapStateToProps = (state: AppStateType) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<GlobalACType>) => {
     return {
-        toggle: (userId: number) => dispatch(toggleAC(userId)),
-        setUser: (users: UsersType) => dispatch(setUsersAC(users)),
-        setTotalUsersCount: (usersCount: number) => dispatch(setTotalUsersCountAC(usersCount)),
-        setCurrentPage: (currentPage: number) => dispatch(setCurrentPageAC(currentPage)),
-        toggleIsFetching:(isFetching:boolean | null) => dispatch(toggleIsFetchingAC(isFetching))
+        toggle: (userId: number) => dispatch(toggle(userId)),
+        setUser: (users: UsersType) => dispatch(setUsers(users)),
+        setTotalUsersCount: (usersCount: number) => dispatch(setTotalUsersCount(usersCount)),
+        setCurrentPage: (currentPage: number) => dispatch(setCurrentPage(currentPage)),
+        toggleIsFetching:(isFetching:boolean | null) => dispatch(toggleIsFetching(isFetching))
     }
 }
 
-const UsersContainer = connect(MapStateToProps, mapDispatchToProps)(UsersAPI)
+const UsersContainer = connect(MapStateToProps, {toggle, setUsers, setTotalUsersCount,
+    setCurrentPage,
+    toggleIsFetching})(UsersAPI);
 
 export default UsersContainer
