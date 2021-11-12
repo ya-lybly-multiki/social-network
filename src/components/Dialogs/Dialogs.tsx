@@ -3,7 +3,7 @@ import classes from './Dialogs.module.css';
 import DialogItem from "./Dialogsitem/DialogItem";
 import Messages from "./Messages/Messages";
 import {DialogType, MessageType} from "../../Redux/Dialogs-reduser";
-import {Button} from "../utils/Button";
+import {Button} from "../utils/Button/Button";
 
 
 

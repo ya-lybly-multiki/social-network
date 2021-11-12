@@ -2,7 +2,7 @@ import React, {ChangeEvent} from "react";
 import classes from './MyPosts.module.css'
 import Posts from "./Post/Posts";
 import {postType} from "../../../Redux/Profile-reduser";
-import {Button} from "../../utils/Button";
+import {Button} from "../../utils/Button/Button";
 
 
 

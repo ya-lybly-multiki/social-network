@@ -2,7 +2,7 @@ import React from "react";
 import s from "./Users.module.css"
 import User from "./User/User";
 import styles from "./User/User.module.css"
-import axios from "axios";
+
 
 
 type PropsType = {
