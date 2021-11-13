@@ -8,7 +8,6 @@ import styles from "./User/User.module.css"
 type PropsType = {
     users: Array<UserType>
     toggle: (userId: number) => void
-    setUser: (users: Array<UserType>) => void
     pageSize: number
     totalUserCount: number
     currentPage: number
@@ -64,7 +63,7 @@ function Users(props: PropsType) {
                           fullName={item.name}
                           status={item.status}
                           toggle={props.toggle}
-                          photos={item.photos.small}
+                          photos={item.photos}
                           uniqueUrlName={item.uniqueUrlName}
                     />)
             })}

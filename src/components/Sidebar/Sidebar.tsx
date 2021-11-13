@@ -9,13 +9,12 @@ type PropsType = {
     avatar: string | undefined
 }
 
-function Sidebar (props:PropsType) {
+function Sidebar(props: PropsType) {
     return (
-        <li className={classes.dialog__item }>
+        <li className={classes.dialog__item}>
             <NavLink to={'/dialog/' + props.id}>
                 <img src={props.avatar}/>
                 <p>{props.name}</p>
-
             </NavLink>
         </li>
     )
