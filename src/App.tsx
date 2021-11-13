@@ -11,6 +11,8 @@ import Friends from "./components/Friends/Friends";
 import Sidebar from "./components/Sidebar/Sidebar";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
+import ProfileContainer from "./components/Profile/ProfileContainer";
+
 
 
 
@@ -26,8 +28,8 @@ const App: React.FC = () => {
                 <div className='app__wrapper_content'>
                     <Route path='/dialogs'
                            render={() => <DialogsContainer />}/>
-                    <Route path='/profile'
-                           render={() => <Profile/>}/>
+                    <Route path='/profile/:userId?'
+                           render={() => <ProfileContainer />}/>
                     <Route path='/users'
                            render={() => <UsersContainer/>}/>
                     <Route path='/news' component={news}/>

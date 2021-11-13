@@ -6,9 +6,34 @@ export type postType = {
     likeCounts:number
 }
 
+type ContactsType = {
+    facebook: string
+    website: string | null
+    vk: string
+    twitter: string
+    instagram: string
+    youtube: null,
+    github: string
+    mainLink: null
+}
+type PhotosType = {
+    small: string
+    large: string
+}
+export type ProfileType = {
+    aboutMe: string
+    "contacts": ContactsType
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    userId: number
+    photos: PhotosType
+}
+
 export type ProfilePageType = {
     messageForNewPost:string
     posts: Array<postType>
+    profile: ProfileType | null
 }
 
 
@@ -17,7 +42,8 @@ let initialState: ProfilePageType = {
         posts: [
             {id: 1, message: "hello everybody", likeCounts: 12},
             {id: 2, message: "its my first post", likeCounts: 13}
-        ]
+        ],
+        profile:null
     }
 
 const ProfileReducer = (state = initialState, action: TsarType): ProfilePageType => {
@@ -38,6 +64,12 @@ const ProfileReducer = (state = initialState, action: TsarType): ProfilePageType
                 ...state,
                 messageForNewPost:action.newText
             }
+        case "SET-USER-PROFILE": {
+            return {
+                ...state,
+                profile:action.profile
+            }
+        }
         default:return state
     }
 }
@@ -46,7 +78,11 @@ export type addPostACType = ReturnType<typeof addPostAC>
 
 export type changeNewTextACType = ReturnType<typeof changeNewTextAC>
 
-export type TsarType = addPostACType | changeNewTextACType
+export type setUserProfileType = ReturnType<typeof setUserProfile>
+
+export type TsarType = addPostACType
+    | changeNewTextACType
+    | setUserProfileType
 
 
 
@@ -61,6 +97,13 @@ export const changeNewTextAC = (newText: string) => {
         type: "CHANGE-NEW-TEXT",
         newText: newText
     } as const
+}
+
+export const setUserProfile = (profile:ProfileType | null) => {
+  return {
+      type:"SET-USER-PROFILE",
+      profile
+  } as const
 }
 
 export default ProfileReducer

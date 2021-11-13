@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./User.module.css"
 import UserPhoto from "../../../assets/images/TG_Box_Set_Cover.jpg"
+import {NavLink} from "react-router-dom";
 
 type PropsType = {
     id: number
@@ -8,7 +9,8 @@ type PropsType = {
     fullName: string
     status: string | null
     toggle: (id: number) => void
-    photos: undefined | string
+    photos: {small: undefined | string
+        large: null | string}
     uniqueUrlName: null | string
 }
 
@@ -20,13 +22,15 @@ function User(props: PropsType) {
     }
 
     const btnClass = props.followed ? styles.btnUnFollow : styles.btnFollow
-    const defaultPhoto = props.photos !== null ? props.photos : UserPhoto
+    const defaultPhoto = props.photos.small !== null ? props.photos.small : UserPhoto
 
     return (
         <div className={styles.userProfile}>
             <div className={styles.userBlock}>
                 <h4>{props.fullName}</h4>
-                <img className={styles.userAvatar} src={defaultPhoto}/>
+                <NavLink to={'/Profile/' + props.id}>
+                    <img className={styles.userAvatar} src={defaultPhoto}/>
+                </NavLink>
                 <button className={btnClass} onClick={toggleHandler}>{props.followed ? 'unfollow' : 'follow'}</button>
             </div>
 
