@@ -12,6 +12,7 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
 
 
 
@@ -23,7 +24,7 @@ const App: React.FC = () => {
     return (
         <BrowserRouter>
             <div className="app__wrapper">
-                <Header/>
+                <HeaderContainer/>
                 <Navbar />
                 <div className='app__wrapper_content'>
                     <Route path='/dialogs'

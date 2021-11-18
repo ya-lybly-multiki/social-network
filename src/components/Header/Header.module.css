@@ -7,3 +7,12 @@
     width: 25px;
     height: 25px;
 }
+
+.headerLogin {
+    font-size: 20px;
+}
+
+.headerWrapper {
+    display: flex;
+    justify-content: space-around;
+}

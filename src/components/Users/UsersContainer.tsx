@@ -2,11 +2,10 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Users, {UserType} from './Users';
 import {AppStateType} from '../../Redux/Redux-store';
-import {Dispatch} from 'redux';
+
 
 
 import {
-    GlobalACType,
     setCurrentPage,
     setTotalUsersCount,
     setUsers,
@@ -65,7 +64,6 @@ type MapStateToPropsType = {
 }
 
  type MapDispatchToPropsType = {
-    users: Array<UserType>
     toggle: (userId: number) => void
     setUsers: (users: Array<UserType>) => void
     setCurrentPage: (num: number) => void
@@ -86,15 +84,6 @@ const MapStateToProps = (state: AppStateType) => {
     }
 }
 
-// const mapDispatchToProps = (dispatch: Dispatch<GlobalACType>) => {
-//     return {
-//         toggle: (userId: number) => dispatch(toggle(userId)),
-//         setUser: (users: UsersType) => dispatch(setUsers(users)),
-//         setTotalUsersCount: (usersCount: number) => dispatch(setTotalUsersCount(usersCount)),
-//         setCurrentPage: (currentPage: number) => dispatch(setCurrentPage(currentPage)),
-//         toggleIsFetching:(isFetching:boolean | null) => dispatch(toggleIsFetching(isFetching))
-//     }
-// }
 
 const UsersContainer = connect(MapStateToProps, {toggle, setUsers, setTotalUsersCount,
     setCurrentPage,
