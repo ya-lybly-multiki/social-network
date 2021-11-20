@@ -1,10 +1,10 @@
 import React from "react";
 import classes from './News.module.css'
 
-function news () {
+function News () {
     return (
         <div>News</div>
     )
 }
 
-export default news;
+export default News;

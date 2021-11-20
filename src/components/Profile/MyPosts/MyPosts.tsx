@@ -29,12 +29,14 @@ function MyPosts(props: PropsType) {
             props.updateNewPostText(current)
     }
 
+
+
     return (
         <div className={classes.posts}>
             <h3>My posts</h3>
             <textarea value={props.messageForNewPost}
                       onChange={ changeHandler}/>
-            <Button name={"Add post"} callBack={OnAddPost}/>
+            <Button callBack={OnAddPost}>{"ADD POST"}</Button>
             {postArray}
         </div>
     )

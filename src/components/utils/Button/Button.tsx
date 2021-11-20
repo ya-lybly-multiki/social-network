@@ -1,17 +1,20 @@
-import React from "react";
+import React, {ButtonHTMLAttributes, DetailedHTMLProps} from "react";
+import styles from './Button.module.css'
 
-type PropsType = {
-    name:string
-    callBack:()=> void
+type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
+
+
+type ButtonPropsType = DefaultButtonPropsType & {
+    callBack: () => void
+    disabled?:boolean
 }
 
-export function Button ({name,callBack}:PropsType) {
+export function Button ({callBack, className, children,disabled}:ButtonPropsType) {
 
-    const onClickHandler = () => {
-        callBack()
-    }
+
+    const finalClassName = `${styles.button} ${className}`
 
     return (
-        <button onClick={onClickHandler}>{name}</button>
+        <button disabled={disabled} className={finalClassName} onClick={callBack}>{children}</button>
     )
 }
