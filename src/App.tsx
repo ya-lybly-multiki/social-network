@@ -13,6 +13,7 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import News from "./components/News/News";
 
 
 
@@ -33,11 +34,12 @@ const App: React.FC = () => {
                            render={() => <ProfileContainer />}/>
                     <Route path='/users'
                            render={() => <UsersContainer/>}/>
-                    <Route path='/news' component={news}/>
+                    <Route path='/news' component={News}/>
                     <Route path='/music' component={music}/>
                     <Route path='/settings' component={settings}/>
                     <Route path='/Friends' component={Friends}/>
                     <Route path='/Sidebar' component={Sidebar}/>
+                    
                 </div>
             </div>
         </BrowserRouter>

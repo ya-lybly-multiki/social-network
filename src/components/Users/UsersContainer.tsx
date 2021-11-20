@@ -4,52 +4,49 @@ import Users, {UserType} from './Users';
 import {AppStateType} from '../../Redux/Redux-store';
 
 
-
 import {
     setCurrentPage,
     setTotalUsersCount,
     setUsers,
-    toggle, toggleIsFetching,
+    toggle, toggleInProgress, toggleIsFetching,
     UsersType
 } from "../../Redux/Users-reducer";
 
-import axios from "axios";
 import Preloader from "../utils/preloader/Preloader";
+import {usersAPI} from "../../Api/ApiJs";
+
 
 export class UsersAPI extends Component<MapStateToPropsType & MapDispatchToPropsType> {
 
     componentDidMount() {
         this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}
-        &count=${this.props.pageSize}`)
-            .then(response => {
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(response.data.items)
-                this.props.setTotalUsersCount(response.data.totalCount)
-            })
+
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
+            this.props.toggleIsFetching(false)
+            this.props.setUsers(data.items)
+            this.props.setTotalUsersCount(data.totalCount)
+        })
     }
 
     onSetCurrentPage = (page: number) => {
         this.props.setCurrentPage(page)
         this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}
-        &count=${this.props.pageSize}`)
-            .then(response => {
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(response.data.items)
-            })
+        usersAPI.getUsers(page, this.props.pageSize).then(data => {
+            this.props.toggleIsFetching(false)
+            this.props.setUsers(data.items)
+        })
     }
 
     render() {
         return <>
-            {this.props.isFetching ? Preloader  : null}
+            {this.props.isFetching ? Preloader : null}
             <Users users={this.props.users}
-                        totalUserCount={this.props.totalUserCount}
-                        pageSize={this.props.pageSize}
-                        currentPage={this.props.currentPage}
-                        setCurrentPage={this.onSetCurrentPage}
-                        toggle={this.props.toggle}
-
+                   totalUserCount={this.props.totalUserCount}
+                   pageSize={this.props.pageSize}
+                   currentPage={this.props.currentPage}
+                   setCurrentPage={this.onSetCurrentPage}
+                   toggle={this.props.toggle}
+                   followingInProgress={this.props.followingInProgress}
             />
         </>
     }
@@ -60,15 +57,16 @@ type MapStateToPropsType = {
     pageSize: number
     totalUserCount: number
     currentPage: number
-    isFetching:boolean | null
+    isFetching: boolean | null
+    followingInProgress: Array<number>
 }
 
- type MapDispatchToPropsType = {
+type MapDispatchToPropsType = {
     toggle: (userId: number) => void
     setUsers: (users: Array<UserType>) => void
     setCurrentPage: (num: number) => void
     setTotalUsersCount: (usersCount: number) => void
-    toggleIsFetching:(isFetching:boolean | null) => void
+    toggleIsFetching: (isFetching: boolean | null) => void
 }
 
 export type UsersComponentType = MapStateToPropsType | MapDispatchToPropsType
@@ -80,13 +78,16 @@ const MapStateToProps = (state: AppStateType) => {
         pageSize: state.usersPage.pageSize,
         totalUserCount: state.usersPage.totalUserCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
 
-const UsersContainer = connect(MapStateToProps, {toggle, setUsers, setTotalUsersCount,
+const UsersContainer = connect(MapStateToProps, {
+    toggle, setUsers, setTotalUsersCount,
     setCurrentPage,
-    toggleIsFetching})(UsersAPI);
+    toggleIsFetching, toggleInProgress
+})(UsersAPI);
 
 export default UsersContainer

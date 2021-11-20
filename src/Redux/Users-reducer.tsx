@@ -8,6 +8,7 @@ export type UserPageType = {
     totalUserCount:number
     currentPage:number
     isFetching:boolean | null
+    followingInProgress:Array<number>
 }
 
 let initialState:UserPageType = {
@@ -15,7 +16,8 @@ let initialState:UserPageType = {
     pageSize:5,
     totalUserCount:16,
     currentPage:1,
-    isFetching:true
+    isFetching:true,
+    followingInProgress: []
 }
 
 
@@ -49,6 +51,15 @@ const UsersReducer = (state = initialState, action: GlobalACType):UserPageType  
                     isFetching:action.isFetching
                 }
             }
+            case "TOGGLE-IN-PROGRESS": {
+                return  {
+                    ...state,
+                    followingInProgress: action.isFetching
+                        ? [...state.followingInProgress,action.userId]
+                        :[...state.followingInProgress.filter(id => id !== action.userId)]
+
+                }
+            }
             default: return state
         }
 }
@@ -59,6 +70,7 @@ export type GlobalACType =
     | setCurrentPageACType
     | setTotalUsersCountACType
     | toggleIsFetchingType
+    | toggleInProgressType
 
 export const toggle = (userId:number) => {
     return {
@@ -94,6 +106,16 @@ export const toggleIsFetching = (isFetching:boolean | null) => {
       isFetching:isFetching
   } as const
 }
+
+export const toggleInProgress = (isFetching:boolean | null,userId:number) => {
+   return {
+       type:'TOGGLE-IN-PROGRESS',
+       isFetching,
+       userId
+   } as const
+}
+
+export type toggleInProgressType = ReturnType<typeof toggleInProgress>
 
 export type toggleIsFetchingType = ReturnType<typeof toggleIsFetching>
 

@@ -12,6 +12,7 @@ type PropsType = {
     totalUserCount: number
     currentPage: number
     setCurrentPage:(num: number)=>void
+    followingInProgress:Array<number>
 }
 
 export type UserType = {
@@ -65,6 +66,7 @@ function Users(props: PropsType) {
                           toggle={props.toggle}
                           photos={item.photos}
                           uniqueUrlName={item.uniqueUrlName}
+                          followingInProgress={props.followingInProgress}
                     />)
             })}
         </div>
