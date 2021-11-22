@@ -43,7 +43,9 @@ function Dialogs(props: PropsType) {
                     </div>
                     <div>
                       <textarea value={newMessageBody} onChange={onSendMessageGhangeHandler}/>
-                        <div><Button name={"Send"} callBack={onNewMessageClickHandler}/></div>
+                        <div>
+                            <Button callBack={onNewMessageClickHandler}>{"Send"}</Button>
+                        </div>
                     </div>
                 </ul>
             </div>
