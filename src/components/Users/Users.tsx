@@ -7,7 +7,8 @@ import styles from "./User/User.module.css"
 
 type PropsType = {
     users: Array<UserType>
-    toggle: (userId: number) => void
+    unFollow: (userId: number) => void
+    follow: (userId: number) => void
     pageSize: number
     totalUserCount: number
     currentPage: number
@@ -37,7 +38,7 @@ function Users(props: PropsType) {
 
 
      let pagesCount = (props.totalUserCount / props.pageSize)
-     <= 20 ? Math.ceil(props.totalUserCount / props.pageSize) : 21
+     <= 20 ? Math.ceil(props.totalUserCount / props.pageSize) : 15
 
     let pages = []
 
@@ -63,7 +64,8 @@ function Users(props: PropsType) {
                           followed={item.followed}
                           fullName={item.name}
                           status={item.status}
-                          toggle={props.toggle}
+                          follow={props.follow}
+                          unFollow={props.unFollow}
                           photos={item.photos}
                           uniqueUrlName={item.uniqueUrlName}
                           followingInProgress={props.followingInProgress}
