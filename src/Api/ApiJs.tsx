@@ -1,4 +1,5 @@
 import axios from "axios";
+import {getUserProfile} from "../Redux/Profile-reduser";
 
 
 
@@ -23,6 +24,9 @@ export const usersAPI = {
     unFollow(userId:number) {
         return instance.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`)
     },
+    getUserProfile (userId:string) {
+        return instance.get(`/profile/` + userId) .then(response => response.data)
+    }
 }
 
 export const AuthApi = {

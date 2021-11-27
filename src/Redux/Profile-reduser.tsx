@@ -1,3 +1,5 @@
+import {Dispatch} from "redux";
+import {usersAPI} from "../Api/ApiJs";
 
 
 export type postType = {
@@ -104,6 +106,15 @@ export const setUserProfile = (profile:ProfileType | null) => {
       type:"SET-USER-PROFILE",
       profile
   } as const
+}
+
+export const getUserProfile = (userId:string) => {
+    return (dispatch: Dispatch<TsarType>) => {
+        usersAPI.getUserProfile(userId)
+            .then(data => {
+                dispatch(setUserProfile(data))
+            })
+    }
 }
 
 export default ProfileReducer
