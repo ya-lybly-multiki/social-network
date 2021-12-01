@@ -38,7 +38,7 @@ function Users(props: PropsType) {
 
 
      let pagesCount = (props.totalUserCount / props.pageSize)
-     <= 20 ? Math.ceil(props.totalUserCount / props.pageSize) : 15
+     <= 20 ? Math.ceil(props.totalUserCount / props.pageSize) : 21
 
     let pages = []
 
@@ -46,28 +46,25 @@ function Users(props: PropsType) {
         pages.push(i)
     }
 
+
+
     return (
-        <div className={styles.usersPage}>
+        <div className={s.usersPage}>
             <div className={s.numberPages}>
-                {pages.map(num => <span key={num}
-                                      className={props.currentPage === num
-                                          ? `${s.numbersPage} ${s.selected}`: s.numbersPage}
-                onClick={()=>{props.setCurrentPage(num)}}
-                >{num}</span>)}
+                {pages.map((page,index) => <div
+                    key={index}
+                    className={props.currentPage === page ? `${s.numbersPage} ${s.selected}` : s.numbersPage}
+                onClick={()=>{props.setCurrentPage(page)}}>{page}</div>)}
             </div>
 
 
             {props.users.map(item => {
                 return (
-                    <User key={item.id}
-                          id={item.id}
-                          followed={item.followed}
-                          fullName={item.name}
-                          status={item.status}
+                    <User
+                        user={item}
+                        key={item.id}
                           follow={props.follow}
                           unFollow={props.unFollow}
-                          photos={item.photos}
-                          uniqueUrlName={item.uniqueUrlName}
                           followingInProgress={props.followingInProgress}
                     />)
             })}

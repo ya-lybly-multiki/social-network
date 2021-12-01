@@ -1,6 +1,5 @@
 import React from "react";
 import {
-    DialogsPageType,
     FinalType,
     sendMessageCreator,
     updateNewMessageBodyPostCreator
@@ -16,12 +15,12 @@ import {Dispatch} from "redux";
         onSendMessageGhange:  (body: string) =>void
     }
 
-    const MapStateToProps = (state:AppStateType):DialogsPageType => {
+    const MapStateToProps = (state:AppStateType) => {
         return {
             dialogs: state.messagesPage.dialogs,
             messages: state.messagesPage.messages,
-            newMessageBody:state.messagesPage.newMessageBody
-
+            newMessageBody:state.messagesPage.newMessageBody,
+            isAuth:state.auth.isAuth
         }
     }
 
