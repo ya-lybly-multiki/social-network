@@ -39,7 +39,6 @@ const App: React.FC = () => {
                     <Route path='/settings' component={settings}/>
                     <Route path='/Friends' component={Friends}/>
                     <Route path='/Sidebar' component={Sidebar}/>
-                    
                 </div>
             </div>
         </BrowserRouter>

@@ -31,7 +31,7 @@ function Dialogs(props: PropsType) {
        props.onSendMessageGhange(body)
     }
 
-    if(!props.isAuth) return <Redirect to={"/login"}/>
+
 
     return (
         <div className={classes.wrapper}>
