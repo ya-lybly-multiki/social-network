@@ -45,7 +45,7 @@ export const setUserData = (userId:number, email:string,login:string) => {
 
 export const getSetUserData = () => {
         return (dispatch: Dispatch<GlobalType>) => {
-            AuthApi.getSetUserData().then(response => {
+            AuthApi.me().then(response => {
                 if (response.resultCode === 0) {
                     const {userId, email, login} = response.data
                     dispatch(setUserData(userId, email, login))

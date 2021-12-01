@@ -11,6 +11,7 @@ import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import News from "./components/News/News";
+import Login from "./components/Login/Login";
 
 
 
@@ -31,6 +32,8 @@ const App: React.FC = () => {
                            render={() => <ProfileContainer />}/>
                     <Route path='/users'
                            render={() => <UsersContainer/>}/>
+                    <Route path='/login'
+                           render={() => <Login/>}/>
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={music}/>
                     <Route path='/settings' component={settings}/>

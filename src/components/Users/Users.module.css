@@ -16,9 +16,13 @@
     cursor: pointer;
 }
 
-.numberPage:hover,
-.selected {
-    background-color: #023b91;
-    color: white;;
+.selected{
+    background-color: #032c91;
+    color: white;
 }
+
+.usersPage {
+    padding: 20px;
+}
+
 

@@ -4,6 +4,7 @@ import DialogItem from "./Dialogsitem/DialogItem";
 import Messages from "./Messages/Messages";
 import {DialogType, MessageType} from "../../Redux/Dialogs-reduser";
 import {Button} from "../utils/Button/Button";
+import {Redirect} from "react-router-dom";
 
 
 
@@ -13,6 +14,7 @@ type PropsType = {
     onNewMessageClick:()=> void
     newMessageBody:string
     onSendMessageGhange:(body:string)=> void
+    isAuth:boolean
 }
 
 
@@ -28,6 +30,8 @@ function Dialogs(props: PropsType) {
         let body = e.currentTarget.value
        props.onSendMessageGhange(body)
     }
+
+    if(!props.isAuth) return <Redirect to={"/login"}/>
 
     return (
         <div className={classes.wrapper}>

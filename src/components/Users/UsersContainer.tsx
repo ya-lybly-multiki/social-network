@@ -27,7 +27,7 @@ export class UsersAPI extends Component<MapStateToPropsType & MapDispatchToProps
 
     render() {
         return <>
-            {this.props.isFetching ? Preloader : null}
+            {this.props.isFetching ? <Preloader/> : null}
             <Users users={this.props.users}
                    totalUserCount={this.props.totalUserCount}
                    pageSize={this.props.pageSize}
