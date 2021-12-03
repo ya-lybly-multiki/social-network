@@ -17,7 +17,8 @@ import {addPostAC, changeNewTextAC, ProfilePageType, TsarType} from "../../../Re
         return {
             posts: state.profilePage.posts,
             messageForNewPost: state.profilePage.messageForNewPost,
-            profile:state.profilePage.profile
+            profile:state.profilePage.profile,
+            userStatus:state.profilePage.userStatus
         }
     }
     const mapDispatchToProps = (dispatch: Dispatch<TsarType>):MapStateToPropsType => {
