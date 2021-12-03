@@ -18,10 +18,7 @@ type ContactsType = {
     github: string
     mainLink: null
 }
-type PhotosType = {
-    small: string
-    large: string
-}
+
 export type ProfileType = {
     aboutMe: string
     "contacts": ContactsType
@@ -29,26 +26,26 @@ export type ProfileType = {
     lookingForAJobDescription: string
     fullName: string
     userId: number
-    photos: PhotosType
+    photos: {
+        small: string | undefined
+        large: string | undefined
+    }
 }
 
-export type ProfilePageType = {
-    messageForNewPost:string
-    posts: Array<postType>
-    profile: ProfileType | null
-}
+export type ProfilePageType = typeof initialState
 
 
-let initialState: ProfilePageType = {
+let initialState = {
         messageForNewPost: "",
         posts: [
             {id: 1, message: "hello everybody", likeCounts: 12},
             {id: 2, message: "its my first post", likeCounts: 13}
         ],
-        profile:null
+        profile: {} as ProfileType | null,
+        userStatus:" "
     }
 
-const ProfileReducer = (state = initialState, action: TsarType): ProfilePageType => {
+const ProfileReducer = (state:ProfilePageType = initialState, action: TsarType): ProfilePageType => {
 
     switch (action.type) {
         case "ADD-POST":
@@ -72,6 +69,12 @@ const ProfileReducer = (state = initialState, action: TsarType): ProfilePageType
                 profile:action.profile
             }
         }
+        case "GET-USER-STATUS": {
+            return {
+                ...state,
+                ...action.payload
+            }
+        }
         default:return state
     }
 }
@@ -82,10 +85,12 @@ export type changeNewTextACType = ReturnType<typeof changeNewTextAC>
 
 export type setUserProfileType = ReturnType<typeof setUserProfile>
 
+export type getUserStatusType = ReturnType<typeof getUserStatus>
+
 export type TsarType = addPostACType
     | changeNewTextACType
     | setUserProfileType
-
+    | getUserStatusType
 
 
 export const addPostAC = () => {
@@ -101,11 +106,28 @@ export const changeNewTextAC = (newText: string) => {
     } as const
 }
 
-export const setUserProfile = (profile:ProfileType | null) => {
+export const setUserProfile = (profile:ProfileType | null ) => {
   return {
       type:"SET-USER-PROFILE",
       profile
   } as const
+}
+
+export const getUserStatus = (userId:string) => {
+    return {
+        type:"GET-USER-STATUS",
+        payload:{userId}
+    } as const
+}
+
+
+export const getStatus = (userId:string) => {
+    return (dispatch:Dispatch<TsarType>) => {
+        usersAPI.getStatus(userId)
+            .then(data => {
+                dispatch(getUserStatus(data))
+            })
+    }
 }
 
 export const getUserProfile = (userId:string) => {
