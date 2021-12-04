@@ -6,8 +6,8 @@ import ProfileStatus from "../ProfileStatus/ProfileStatus";
 
 
 type PropsType = {
-    profile:ProfileType | null
-    userStatus:string
+    profile: ProfileType | null
+    userStatus: string
 }
 
 function ProfileInfo({profile,userStatus}:PropsType) {
@@ -20,7 +20,7 @@ function ProfileInfo({profile,userStatus}:PropsType) {
                 <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkIdnf8ymLyVAK_C_5khkpGAfhprJNT4Dy1g&usqp=CAU'/>
             </div>
             <div className={classes.description}>
-                {/*<img src={profile?.photos.large}/>*/}
+                <img  src={profile?.photos.large}/>
                 <p>{profile?.fullName}</p>
                <ProfileStatus userStatus={userStatus}/>
             </div>

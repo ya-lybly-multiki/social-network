@@ -1,5 +1,5 @@
 import axios from "axios";
-import {getUserProfile} from "../Redux/Profile-reduser";
+
 
 
 
@@ -25,15 +25,18 @@ export const usersAPI = {
         return instance.delete(`follow/${userId}`)
     },
     getUserProfile (userId:string) {
-        return instance.get(`profile/` + userId) .then(response => response.data)
+        return instance.get(`profile/` + userId)
+            .then(response => response.data)
     },
     getStatus(userId:string) {
-        return instance.get(`profile/status/` + userId).then(res => res.data)
+        return instance.get(`profile/status/` + userId)
+            .then(res => res.data)
     }
 }
 
 export const AuthApi = {
     me () {
-        return instance.get(`auth/me`).then(response => response.data)
+        return instance.get(`auth/me`)
+            .then(response => response.data)
     }
 }

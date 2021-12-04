@@ -14,7 +14,6 @@ type MapStateToPropsType = {
 
 type PathParamType = {
     userId: string
-    userStatus:string
 }
 
 type PropsType = RouteComponentProps<PathParamType> & OwnPropsType

@@ -8,44 +8,52 @@ export type postType = {
     likeCounts:number
 }
 
-type ContactsType = {
-    facebook: string
-    website: string | null
-    vk: string
-    twitter: string
-    instagram: string
-    youtube: null,
-    github: string
-    mainLink: null
-}
+
+
+
 
 export type ProfileType = {
-    aboutMe: string
-    "contacts": ContactsType
+    aboutMe: null | string
+    contacts: {
+        facebook: null | string
+        website: null | string
+        vk: null | string
+        twitter: null | string
+        instagram: null | string
+        "youtube": null | string
+        github: null | string
+        mainLink: null | string
+    }
     lookingForAJob: boolean
-    lookingForAJobDescription: string
-    fullName: string
-    userId: number
-    photos: {
-        small: string | undefined
-        large: string | undefined
+    lookingForAJobDescription: null | string
+    "fullName": null | string
+    "userId": number
+    "photos": {
+        "small": string
+        "large": string
     }
 }
 
-export type ProfilePageType = typeof initialState
+export type ProfilePageType = {
+    messageForNewPost:string
+    posts: postType[]
+    profile:ProfileType | null
+    userStatus:string
+}
 
 
-let initialState = {
+
+let initialState :ProfilePageType  = {
         messageForNewPost: "",
         posts: [
             {id: 1, message: "hello everybody", likeCounts: 12},
             {id: 2, message: "its my first post", likeCounts: 13}
         ],
-        profile: {} as ProfileType | null,
-        userStatus:" "
+        profile:  null,
+        userStatus: ""
     }
 
-const ProfileReducer = (state:ProfilePageType = initialState, action: TsarType): ProfilePageType => {
+const ProfileReducer = (state = initialState, action: TsarType): ProfilePageType => {
 
     switch (action.type) {
         case "ADD-POST":
@@ -66,13 +74,13 @@ const ProfileReducer = (state:ProfilePageType = initialState, action: TsarType):
         case "SET-USER-PROFILE": {
             return {
                 ...state,
-                profile:action.profile
+                profile:action.newProfile
             }
         }
         case "GET-USER-STATUS": {
             return {
                 ...state,
-                ...action.payload
+                userStatus:action.userId
             }
         }
         default:return state
@@ -106,17 +114,17 @@ export const changeNewTextAC = (newText: string) => {
     } as const
 }
 
-export const setUserProfile = (profile:ProfileType | null ) => {
+export const setUserProfile = (newProfile:ProfileType  ) => {
   return {
       type:"SET-USER-PROFILE",
-      profile
+       newProfile
   } as const
 }
 
 export const getUserStatus = (userId:string) => {
     return {
         type:"GET-USER-STATUS",
-        payload:{userId}
+        userId
     } as const
 }
 
