@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {usersAPI} from "../Api/ApiJs";
+import {profileAPI, usersAPI} from "../Api/ApiJs";
 
 
 export type postType = {
@@ -83,6 +83,12 @@ const ProfileReducer = (state = initialState, action: TsarType): ProfilePageType
                 userStatus:action.userId
             }
         }
+        case "UPDATE-NEW-STATUS": {
+            return  {
+                ...state,
+                userStatus:action.userStatus
+            }
+        }
         default:return state
     }
 }
@@ -95,11 +101,13 @@ export type setUserProfileType = ReturnType<typeof setUserProfile>
 
 export type getUserStatusType = ReturnType<typeof getUserStatus>
 
+export type updateNewStatusType = ReturnType<typeof updateNewStatus>
+
 export type TsarType = addPostACType
     | changeNewTextACType
     | setUserProfileType
     | getUserStatusType
-
+    | updateNewStatusType
 
 export const addPostAC = () => {
     return {
@@ -128,10 +136,17 @@ export const getUserStatus = (userId:string) => {
     } as const
 }
 
+export const updateNewStatus = (userStatus:string) => {
+   return {
+       type:"UPDATE-NEW-STATUS",
+       userStatus
+   } as const
+}
+
 
 export const getStatus = (userId:string) => {
     return (dispatch:Dispatch<TsarType>) => {
-        usersAPI.getStatus(userId)
+        profileAPI.getStatus(userId)
             .then(data => {
                 dispatch(getUserStatus(data))
             })
@@ -140,10 +155,20 @@ export const getStatus = (userId:string) => {
 
 export const getUserProfile = (userId:string) => {
     return (dispatch: Dispatch<TsarType>) => {
-        usersAPI.getUserProfile(userId)
+        profileAPI.getUserProfile(userId)
             .then(data => {
                 dispatch(setUserProfile(data))
             })
+    }
+}
+
+export const updateUserStatus = (userStatus:string) => {
+    return (dispatch:Dispatch<TsarType>) => {
+        profileAPI.updateUserStatus(userStatus).then(data => {
+            if(data.data.resultCode === 0) {
+                dispatch(updateNewStatus(userStatus))
+            }
+        })
     }
 }
 

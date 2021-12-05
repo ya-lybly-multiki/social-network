@@ -8,9 +8,10 @@ import ProfileStatus from "../ProfileStatus/ProfileStatus";
 type PropsType = {
     profile: ProfileType | null
     userStatus: string
+    updateUserStatus:(userStatus:string) => void
 }
 
-function ProfileInfo({profile,userStatus}:PropsType) {
+function ProfileInfo({profile,userStatus,updateUserStatus}:PropsType) {
 
 
 
@@ -22,7 +23,7 @@ function ProfileInfo({profile,userStatus}:PropsType) {
             <div className={classes.description}>
                 <img  src={profile?.photos.large}/>
                 <p>{profile?.fullName}</p>
-               <ProfileStatus userStatus={userStatus}/>
+               <ProfileStatus updateUserStatus={updateUserStatus} userStatus={userStatus}/>
             </div>
         </div>
     )
