@@ -17,7 +17,7 @@ function Profile(props:PropsType) {
             <ProfileInfo userStatus={props.userStatus}
                          updateUserStatus={props.updateUserStatus}
                          profile={props.profile}/>
-            <MyPostContainer  />
+            <MyPostContainer />
         </div>
 
     )

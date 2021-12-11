@@ -1916,6 +1916,11 @@
   dependencies:
     source-map "^0.6.1"
 
+"@types/uuid@^8.3.3":
+  version "8.3.3"
+  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.3.3.tgz#c6a60686d953dbd1b1d45e66f4ecdbd5d471b4d0"
+  integrity sha512-0LbEEx1zxrYB3pgpd1M5lEhLcXjKJnYghvhTRgaBeUivLHMDM1TzF3IJ6hXU2+8uA4Xz+5BA63mtZo5DjVT8iA==
+
 "@types/webpack-sources@*":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@types/webpack-sources/-/webpack-sources-2.1.0.tgz#8882b0bd62d1e0ce62f183d0d01b72e6e82e8c10"
@@ -10018,6 +10023,11 @@ react-error-overlay@^6.0.9:
   version "6.0.9"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.9.tgz#3c743010c9359608c375ecd6bc76f35d93995b0a"
   integrity sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==
+
+react-hook-form@^7.21.2:
+  version "7.21.2"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.21.2.tgz#3faf1292b66b97f6897ba46138aeaf5a1f6031c6"
+  integrity sha512-G2qcUsZSoVolLMZi83nRcZR3VquUWI8lgAfMUyL2teL7vAFPKKwPMfKv2+tXFZjBMzNXHb+HxARdUGcETo8IqQ==
 
 react-is@^16.4.2, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"

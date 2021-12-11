@@ -1,6 +1,7 @@
+import { v1 } from "uuid"
 
 export type MessageType = {
-    id:number
+    id:string
     message:string
 }
 
@@ -13,19 +14,18 @@ export type DialogType = {
 export type DialogsPageType = {
     dialogs: Array<DialogType>
     messages:Array<MessageType>
-    newMessageBody:string
 }
 
 
 
 let initialState:DialogsPageType = {
     messages: [
-        {id: 1, message: "privet kotik"},
-        {id: 2, message: "Pudge ss"},
-        {id: 3, message: "Idi rabotai"},
-        {id: 4, message: "Hm ya lol"},
-        {id: 5, message: "Ti gde?"},
-        {id: 6, message: "Bombim Dalshe"}
+        {id: v1(), message: "privet kotik"},
+        {id: v1(), message: "Pudge ss"},
+        {id: v1(), message: "Idi rabotai"},
+        {id: v1(), message: "Hm ya lol"},
+        {id: v1(), message: "Ti gde?"},
+        {id: v1(), message: "Bombim Dalshe"}
     ],
     dialogs: [
         {
@@ -59,50 +59,38 @@ let initialState:DialogsPageType = {
             avatar: "https://kopilkasovetov.com/wp-content/uploads/2013/06/kak-sdelat-chat-besplatno-600x600.jpg"
         }
     ],
-    newMessageBody : " "
+
 }
 
 
 
 const DialogsReducer = (state = initialState, action:FinalType):DialogsPageType => {
         switch (action.type) {
-            case "SEND-MESSAGE":
+            case 'ADD-MESSAGE':
+                const text = action.newMessageBody
                 return {
                     ...state,
-                    newMessageBody:action.body
-                };
-            case "UPDATE-NEW-MESSAGE":
-                const newMessage:MessageType = {
-                    id:Math.random() * 100,
-                    message:state.newMessageBody
+                    messages: [...state.messages, {id: v1(), message: text}]
                 }
-                return {
-                    ...state,
-                newMessageBody: "",
-                    messages: [...state.messages,{...newMessage}]
-                };
-            default: return state
+            default:
+                return state
         }
 }
 
 export type sendMessageCreatorType = ReturnType<typeof sendMessageCreator>
-export type updateNewMessageBodyPostCreatorType = ReturnType<typeof updateNewMessageBodyPostCreator>
-
-export type FinalType = sendMessageCreatorType | updateNewMessageBodyPostCreatorType
 
 
-export const sendMessageCreator = () => {
+export type FinalType = sendMessageCreatorType
+
+
+export const sendMessageCreator = (newMessageBody:string) => {
     return {
-        type:"UPDATE-NEW-MESSAGE"
+        type:"ADD-MESSAGE",
+        newMessageBody
     } as const
 }
 
-export const updateNewMessageBodyPostCreator = (body: string)=> {
-    return {
-        type: "SEND-MESSAGE",
-        body: body
-    } as const
-}
+
 
 export default DialogsReducer
 

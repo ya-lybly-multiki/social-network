@@ -3,7 +3,7 @@ import classes from "./Messages.module.css";
 
 type PropsType = {
     message:string
-    id:number
+    id:string
 }
 
 function Messages (props:PropsType) {

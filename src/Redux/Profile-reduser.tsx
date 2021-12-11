@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {profileAPI, usersAPI} from "../Api/ApiJs";
+import {profileAPI} from "../Api/ApiJs";
 
 
 export type postType = {
@@ -7,10 +7,6 @@ export type postType = {
     message:string
     likeCounts:number
 }
-
-
-
-
 
 export type ProfileType = {
     aboutMe: null | string
@@ -35,7 +31,6 @@ export type ProfileType = {
 }
 
 export type ProfilePageType = {
-    messageForNewPost:string
     posts: postType[]
     profile:ProfileType | null
     userStatus:string
@@ -44,7 +39,6 @@ export type ProfilePageType = {
 
 
 let initialState :ProfilePageType  = {
-        messageForNewPost: "",
         posts: [
             {id: 1, message: "hello everybody", likeCounts: 12},
             {id: 2, message: "its my first post", likeCounts: 13}
@@ -57,20 +51,16 @@ const ProfileReducer = (state = initialState, action: TsarType): ProfilePageType
 
     switch (action.type) {
         case "ADD-POST":
+            const textPost = action.text
             const newPost: postType = {
                 id: Math.random() * 100,
-                message: state.messageForNewPost,
-                likeCounts: 0
+                message: textPost,
+                likeCounts: 0,
             };
             return {
                 ...state,
             posts:[...state.posts,{...newPost}]
             };
-        case "CHANGE-NEW-TEXT":
-            return {
-                ...state,
-                messageForNewPost:action.newText
-            }
         case "SET-USER-PROFILE": {
             return {
                 ...state,
@@ -95,8 +85,6 @@ const ProfileReducer = (state = initialState, action: TsarType): ProfilePageType
 
 export type addPostACType = ReturnType<typeof addPostAC>
 
-export type changeNewTextACType = ReturnType<typeof changeNewTextAC>
-
 export type setUserProfileType = ReturnType<typeof setUserProfile>
 
 export type getUserStatusType = ReturnType<typeof getUserStatus>
@@ -104,23 +92,18 @@ export type getUserStatusType = ReturnType<typeof getUserStatus>
 export type updateNewStatusType = ReturnType<typeof updateNewStatus>
 
 export type TsarType = addPostACType
-    | changeNewTextACType
     | setUserProfileType
     | getUserStatusType
     | updateNewStatusType
 
-export const addPostAC = () => {
+export const addPostAC = (text:string) => {
     return {
         type: "ADD-POST",
+        text
     } as const
 }
 
-export const changeNewTextAC = (newText: string) => {
-    return {
-        type: "CHANGE-NEW-TEXT",
-        newText: newText
-    } as const
-}
+
 
 export const setUserProfile = (newProfile:ProfileType  ) => {
   return {

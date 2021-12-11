@@ -1,19 +1,17 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useState} from "react";
 import classes from './Dialogs.module.css';
 import DialogItem from "./Dialogsitem/DialogItem";
 import Messages from "./Messages/Messages";
 import {DialogType, MessageType} from "../../Redux/Dialogs-reduser";
-import {Button} from "../utils/Button/Button";
-import {Redirect} from "react-router-dom";
+import TextAreaForm from "../utils/TextAreaForm/TextAreaForm";
 
 
 
 type PropsType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
-    onNewMessageClick:()=> void
+    onNewMessageClick:(newMessage:string)=> void
     newMessageBody:string
-    onSendMessageGhange:(body:string)=> void
     isAuth:boolean
 }
 
@@ -24,15 +22,12 @@ function Dialogs(props: PropsType) {
     let messageElements = props.messages.map((m) => <Messages message={m.message} id={m.id}/>)
     let newMessageBody = props.newMessageBody
 
-    const onNewMessageClickHandler = () => props.onNewMessageClick()
+    const onNewMessageClickHandler = (newMessage:string) => {
+        props.onNewMessageClick(newMessage)
+        setTitle("")
 
-    const onSendMessageGhangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let body = e.currentTarget.value
-       props.onSendMessageGhange(body)
-    }
-
-
-
+        }
+    const [title,setTitle] = useState(newMessageBody)
     return (
         <div className={classes.wrapper}>
             <div className={classes.dialogs__wrapper}>
@@ -46,10 +41,11 @@ function Dialogs(props: PropsType) {
                         {messageElements}
                     </div>
                     <div>
-                      <textarea value={newMessageBody} onChange={onSendMessageGhangeHandler}/>
-                        <div>
-                            <Button callBack={onNewMessageClickHandler}>{"Send"}</Button>
-                        </div>
+                        <TextAreaForm addText={onNewMessageClickHandler}
+                                      Text={title}
+                                      nameBtn={"Send"}
+                                      setTitle={setTitle}
+                        />
                     </div>
                 </ul>
             </div>

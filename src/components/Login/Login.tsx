@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 
 const Login = () => {
