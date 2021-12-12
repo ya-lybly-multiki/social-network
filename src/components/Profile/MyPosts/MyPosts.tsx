@@ -30,11 +30,15 @@ function MyPosts(props: PropsType) {
 
     return (
         <div className={classes.posts}>
-            <h3>My posts</h3>
-           <TextAreaForm Text={title} addText={OnAddPost}
-                         nameBtn={"Add post"}
-                         setTitle={setTitle}
-           />
+            <label>
+                <h3>My posts</h3>
+                <TextAreaForm Text={title} addText={OnAddPost}
+                              nameBtn={"Add post"}
+                              setTitle={setTitle}
+                />
+            </label>
+
+
             {postArray}
         </div>
     )

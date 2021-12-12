@@ -20,10 +20,16 @@ const TextAreaForm = ({nameBtn,
                           addText,
                         ...props
                           }:PropsType) => {
-    const { register, setValue, handleSubmit,reset, formState: { errors } } = useForm<FormData>();
+    const { register, setValue, handleSubmit,reset, formState: { errors,isValid } } = useForm<FormData>({
+        mode:"all"
+    });
     const onSubmit = handleSubmit(data => console.log(data));
 
-
+    const onKey = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (event.key === "Enter") {
+            addText(Text)
+        }
+    }
 
     const changeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let current = e.currentTarget.value
@@ -31,25 +37,34 @@ const TextAreaForm = ({nameBtn,
 
     }
 
-
     const handlerReset = () => {
-        addText(Text)
+       return  Text ? addText(Text) : errors.firstName?.message
     }
-
-    register('firstName', { required: true, maxLength: 10 });
 
     const { onChange } = register('firstName');
 
     return (
         <div>
             <form onSubmit={onSubmit}>
-                <textarea value={Text}   {...register("firstName",{
+                <textarea onKeyPress={onKey}  value={Text}   {...register("firstName",{
                     onChange: (e) => {changeHandler(e)},
+                    required:"Поле обязательно к заполнению",
+                    minLength:{
+                            value:1,
+                            message:"Минимум 1 символ"
+                    },
+                    maxLength:{
+                        value:40,
+                        message:"максимум 20 символов"
+                    }
+                    ,
                 })}>
-
                 </textarea>
+                <div style={{height:40}}>
+                    {errors?.firstName && <p>{errors?.firstName?.message || "Error!"}</p>}
+                </div>
                 <div>
-                    <Button  callBack={handlerReset} >{nameBtn}</Button>
+                    <Button type={"submit"} disabled={!isValid} callBack={handlerReset} >{nameBtn}</Button>
                 </div>
             </form>
         </div>

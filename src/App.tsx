@@ -12,6 +12,7 @@ import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import News from "./components/News/News";
 import Login from "./components/Login/Login";
+import LoginForm from "./components/Login/LoginForm";
 
 
 
@@ -33,7 +34,7 @@ const App: React.FC = () => {
                     <Route path='/users'
                            render={() => <UsersContainer/>}/>
                     <Route path='/login'
-                           render={() => <Login/>}/>
+                           render={() => <LoginForm/>}/>
                     <Route path='/news' component={News}/>
                     <Route path='/music' component={music}/>
                     <Route path='/settings' component={settings}/>
