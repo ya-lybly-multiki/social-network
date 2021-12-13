@@ -43,9 +43,9 @@ export const setUserData = (userId:number, email:string,login:string) => {
     } as const
 }
 
+
 export const getSetUserData = () => {
         return (dispatch: Dispatch<GlobalType>) => {
-
             AuthApi.me()
                 .then(response => {
                 if (response.resultCode === 0) {
@@ -54,6 +54,18 @@ export const getSetUserData = () => {
                 }
             })
         }
+}
+
+
+export const login = (email:string,password:string,rememberMe:boolean) => {
+    return (dispatch: Dispatch<GlobalType>) => {
+        AuthApi.login(email,password,rememberMe)
+            .then(response => {
+                if (response.resultCode === 0) {
+                   dispatch(getSetUserData())
+                }
+            })
+    }
 }
 
 export default AuthReducer

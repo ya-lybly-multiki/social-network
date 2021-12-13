@@ -16,7 +16,6 @@ const LoginForm = () => {
 
     const onSubmit = () => {
         handleSubmit(data => console.log(data) );
-
     }
 
 
