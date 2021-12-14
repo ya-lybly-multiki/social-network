@@ -100,6 +100,6 @@ export const AuthApi = {
         (`auth/login`,{email,password,rememberMe}).then(res => res.data)
     },
     logOut () {
-        return instance.delete(`auth/login`,)
+        return instance.delete(`auth/login`,).then(res => res.data)
     },
 }

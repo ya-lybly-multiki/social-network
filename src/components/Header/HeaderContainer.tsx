@@ -3,7 +3,7 @@ import Header from "./Header";
 
 import {connect} from "react-redux";
 import {AppStateType} from "../../Redux/Redux-store";
-import {getSetUserData} from "../../Redux/Auth-reducer";
+import {getSetUserData, logOut} from "../../Redux/Auth-reducer";
 
 
 type MapStateToProps = {
@@ -13,6 +13,7 @@ type MapStateToProps = {
 
 type MapDispatchToPropsType = {
     getSetUserData: () => void
+    logOut:()=> void
 }
 
 class HeaderAPI extends Component<MapStateToProps & MapDispatchToPropsType> {
@@ -35,6 +36,6 @@ const MapStateToProps = (state: AppStateType) => {
 
 }
 
-const HeaderContainer = connect(MapStateToProps, {getSetUserData})(HeaderAPI)
+const HeaderContainer = connect(MapStateToProps, {getSetUserData,logOut})(HeaderAPI)
 
 export default HeaderContainer;

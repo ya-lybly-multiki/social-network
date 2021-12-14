@@ -60,9 +60,9 @@ const TextAreaForm = ({nameBtn,
                     ,
                 })}>
                 </textarea>
-                <div style={{height:40}}>
+
                     {errors?.firstName && <p>{errors?.firstName?.message || "Error!"}</p>}
-                </div>
+
                 <div>
                     <Button type={"submit"} disabled={!isValid} callBack={handlerReset} >{nameBtn}</Button>
                 </div>
