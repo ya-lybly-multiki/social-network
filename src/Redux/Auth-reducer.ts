@@ -51,6 +51,7 @@ export const setUserData = (userId: number | null, email: string | null, login: 
 
 
 export const getSetUserData = () => {
+
     return (dispatch: Dispatch<GlobalType>) => {
         AuthApi.me()
             .then(response => {
@@ -69,7 +70,6 @@ export const login = (email: string, password: string, rememberMe: boolean): Thu
             .then(response => {
                 if (response.resultCode === 0) {
                     dispatch(getSetUserData())
-
                 }
             })
 }

@@ -40,6 +40,15 @@ class ProfileStatus extends React.Component<PropsType> {
         }
     }
 
+    onKey = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter") {
+            this.setState({
+                editMode: false
+            })
+            this.props.updateUserStatus(this.state.userStatus)
+        }
+    }
+
     render() {
         return (
             <div>
@@ -52,7 +61,9 @@ class ProfileStatus extends React.Component<PropsType> {
                 }
                 {this.state.editMode &&
                 <div>
-                    <input value={this.state.userStatus}
+                    <input
+                        onKeyPress={this.onKey}
+                        value={this.state.userStatus}
                            onBlur={this.deactivateEditMode}
                            autoFocus
                            onChange={this.onStatusChange}
