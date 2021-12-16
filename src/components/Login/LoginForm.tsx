@@ -1,14 +1,11 @@
 import React from 'react';
-import {useForm} from "react-hook-form";
-import {connect} from "react-redux";
+import {SubmitHandler, useForm} from "react-hook-form";
+import {connect, useDispatch} from "react-redux";
 import {login} from "../../Redux/Auth-reducer";
 import {AppStateType} from "../../Redux/Redux-store";
 import {Redirect} from "react-router-dom";
 
-type FormInputs = {
-    login: string
-    Password: string
-}
+
 type FormDataType = {
     email: string
     password: string
@@ -17,18 +14,17 @@ type FormDataType = {
 
 type LoginPropsType = MapStateToPropsType & MapDispatchToPropsType
 
-const LoginForm = (props:LoginPropsType) => {
+function LoginForm (props:LoginPropsType)  {
 
-    const { register, setValue, handleSubmit,reset, formState: { errors,isValid } } = useForm<FormInputs>({
+   const dispatch = useDispatch()
+
+    const { register,  handleSubmit,reset, formState: { errors,isValid } } = useForm<FormDataType>({
         mode:"all"
     });
 
-    const loginValue = (value:FormDataType) => {
-        props.login(value.email,value.password,value.rememberMe)
-    }
 
-    const onSubmit = () => {
-        handleSubmit(loginValue)
+    function onSubmit(data:FormDataType) {
+        dispatch(login(data.email,data.password,data.rememberMe))
     }
 
 
@@ -37,34 +33,36 @@ const LoginForm = (props:LoginPropsType) => {
     }
 
     return (
-        <form onSubmit={onSubmit}>
+        <form style={{padding: "15px"}} onSubmit={handleSubmit(onSubmit)}>
             <label>
                 <h3>Login</h3>
                 <div>
-                    <input type={"email"} {...register("login", { required: true
+                    <input type={"email"} {...register("email", { required: true
                     ,minLength:{
                             value:5,
                             message:"Минимум 5 символов"
                         }
                     })} />
-                        {errors?.login && <p>{errors?.login?.message || "Error!"}</p>}
+                        {errors?.email && <p>{errors?.email?.message || "Error!"}</p>}
                 </div>
             </label>
                 <div>
-                    <input type={"password"} {...register("Password",
+                    <label>
+                    <h3>Password</h3>
+                    <input type={"password"} {...register("password",
                         { required: "Поле обязательно к заполнению" ,
                             minLength:{
                                 value:5,
                                 message:"Минимум 5 символов"
                             }})} />
-                        {errors?.Password && <p>{errors?.Password?.message || "Error!"}</p>}
+                        {errors?.password && <p>{errors?.password?.message || "Error!"}</p>}
+                    </label>
                 </div>
                 <div>
-                    <input type={"checkbox"}/> Remember me
+                    <input type={"checkbox"} {...register("rememberMe")}/> Remember me
                 </div>
                 <button disabled={!isValid} type={"submit"}>Login</button>
         </form>
-
 
     );
 };
@@ -83,5 +81,6 @@ const MapStateToProps = (state:AppStateType) => {
     }
 }
 
-export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(
-    MapStateToProps, {login})(LoginForm)
+const LoginContainer = connect(MapStateToProps,{login})(LoginForm)
+
+export default LoginContainer

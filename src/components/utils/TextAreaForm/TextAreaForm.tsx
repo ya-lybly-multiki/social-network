@@ -41,7 +41,7 @@ const TextAreaForm = ({nameBtn,
        return  Text ? addText(Text) : errors.firstName?.message
     }
 
-    const { onChange } = register('firstName');
+
 
     return (
         <div>
