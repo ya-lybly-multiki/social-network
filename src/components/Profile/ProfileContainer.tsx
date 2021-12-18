@@ -10,6 +10,8 @@ import {compose} from "redux";
 type MapStateToPropsType = {
     profile:ProfileType | null
     userStatus:string
+    isAuth: boolean
+    authorizedUserId: number | null
 }
 
 type PathParamType = {
@@ -29,12 +31,16 @@ type OwnPropsType = MapStateToPropsType & MapDispatchToProps
  class ProfileContainer   extends React.Component<PropsType>{
 
     componentDidMount():void {
-        let userId = this.props.match.params.userId
+        let userId = Number(this.props.match.params.userId)
         if (!userId) {
-            userId = "2"
+            if(this.props.authorizedUserId) {
+                userId = this.props.authorizedUserId
+            } else {
+                this.props.history.push('/login')
+            }
         }
-        this.props.getUserProfile(userId)
-        this.props.getStatus(userId)
+        this.props.getUserProfile(String(userId))
+        this.props.getStatus(String(userId))
     }
 
     render() {
@@ -54,12 +60,15 @@ type OwnPropsType = MapStateToPropsType & MapDispatchToProps
 const mapStateToProps = (state:AppStateType):MapStateToPropsType => {
         return {
             profile:state.profilePage.profile,
-            userStatus:state.profilePage.userStatus
+            userStatus:state.profilePage.userStatus,
+            isAuth:state.auth.isAuth,
+            authorizedUserId:state.auth.userId
         }
 }
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps,{getUserProfile,getStatus,updateUserStatus}),
+    connect(mapStateToProps,{getUserProfile,
+        getStatus,updateUserStatus}),
     withRouter,
     withAuthRedirect
 )(ProfileContainer)

@@ -41,7 +41,7 @@ export const setUserData = (userId: number | null, email: string | null, login: 
     return {
         type: "SET-USER-DATA",
         data: {
-            userId,
+             userId,
             email,
             login,
             isAuth
@@ -50,16 +50,12 @@ export const setUserData = (userId: number | null, email: string | null, login: 
 }
 
 
-export const getSetUserData = () => {
-
-    return (dispatch: Dispatch<GlobalType>) => {
-        AuthApi.me()
-            .then(response => {
-                if (response.resultCode === 0) {
-                    const {userId, email, login} = response.data
-                    dispatch(setUserData(userId, email, login,true))
-                }
-            })
+export const getAuthUserData = (): ThunkType<GlobalType> => async (dispatch) => {
+    const response = await AuthApi.me()
+    // если resultCode = 0 - залогинился, 1 - нет
+    if (response.resultCode === 0) {
+        const {id, login, email} = response.data
+        dispatch(setUserData(id, login, email, true))
     }
 }
 
@@ -69,7 +65,7 @@ export const login = (email: string, password: string, rememberMe: boolean): Thu
         AuthApi.login(email, password, rememberMe)
             .then(response => {
                 if (response.resultCode === 0) {
-                    dispatch(getSetUserData())
+                    dispatch(getAuthUserData())
                 }
             })
 }
