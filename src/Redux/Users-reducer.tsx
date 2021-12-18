@@ -144,11 +144,12 @@ export type UnfollowType = ReturnType<typeof unFollowSuccess>
 
 export type setUsersACType = ReturnType<typeof setUsers>
 
-export const getUsers = (currentPage: number, pageSize: number) => {
+export const getUsers = (page: number, pageSize: number) => {
     return (dispatch: Dispatch<GlobalACType>) => {
         dispatch(toggleIsFetching(true));
+        dispatch(setCurrentPage(page))
 
-        usersAPI.getUsers(currentPage, pageSize).then(data => {
+        usersAPI.getUsers(page, pageSize).then(data => {
             dispatch(toggleIsFetching(false));
             dispatch(setUsers(data.items));
             dispatch(setTotalUsersCount(data.totalCount));

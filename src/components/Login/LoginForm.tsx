@@ -24,6 +24,7 @@ function LoginForm (props:LoginPropsType)  {
 
 
     function onSubmit(data:FormDataType) {
+        console.log(data)
         dispatch(login(data.email,data.password,data.rememberMe))
     }
 

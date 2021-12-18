@@ -7,7 +7,7 @@ import settings from "./components/Settings/Settings";
 import Friends from "./components/Friends/Friends";
 import Sidebar from "./components/Sidebar/Sidebar";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import UsersContainer from "./components/Users/UsersContainer";
+import UsersContainer from "./components/Users/UsersApi";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import News from "./components/News/News";
@@ -48,7 +48,7 @@ class App extends Component<MapDispatchToPropsType & MapStateToPropsType> {
                         <Route path='/profile/:userId?'
                                render={() => <ProfileContainer/>}/>
                         <Route path='/users'
-                               render={() => <UsersContainer/>}/>
+                               render={() => <UsersContainer  />}/>
                         <Route path='/login'
                                render={() => <LoginContainer/>}/>
                         <Route path='/news' component={News}/>
