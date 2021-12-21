@@ -36,7 +36,6 @@ export const initializeApp = (): ThunkType<ActionsType> =>
     async (dispatch) => {
     debugger
     dispatch(getAuthUserData())
-
         .then(res => {
         dispatch(initializedSuccessAc())
     })
