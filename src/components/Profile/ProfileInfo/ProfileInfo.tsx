@@ -2,6 +2,7 @@ import React from "react";
 import classes from "./ProfileInfo.module.css";
 import {ProfileType} from "../../../Redux/Profile-reduser";
 import ProfileStatus from "../ProfileStatus/ProfileStatus";
+import {ProfileStatusWithHooks} from "../ProfileStatus/ProfileStatusWithHooks";
 
 
 
@@ -23,7 +24,7 @@ function ProfileInfo({profile,userStatus,updateUserStatus}:PropsType) {
             <div className={classes.description}>
                 <img  src={profile?.photos.large}/>
                 <p>{profile?.fullName}</p>
-               <ProfileStatus updateUserStatus={updateUserStatus} userStatus={userStatus}/>
+               <ProfileStatusWithHooks updateUserStatus={updateUserStatus} userStatus={userStatus}/>
             </div>
         </div>
     )
