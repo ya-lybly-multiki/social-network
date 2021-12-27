@@ -24,11 +24,15 @@ export const ProfileStatusWithHooks = (props: PropsType) => {
         props.updateUserStatus(status)
     }
 
+    const onClickSpan = () => {
+        setEditMode(true)
+    }
+
     return (
         <div>
             {!editMode &&
                 <div>
-                    <span onDoubleClick={()=> {setEditMode(true)}} >
+                    <span onDoubleClick={onClickSpan} >
                         {props.userStatus || "-----"}
                     </span>
             </div>
