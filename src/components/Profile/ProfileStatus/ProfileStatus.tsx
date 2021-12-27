@@ -8,8 +8,6 @@ type PropsType = {
 
 class ProfileStatus extends React.Component<PropsType> {
 
-
-
     state = {
         editMode: false,
         userStatus:this.props.userStatus

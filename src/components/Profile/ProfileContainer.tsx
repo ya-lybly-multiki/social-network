@@ -44,8 +44,6 @@ type OwnPropsType = MapStateToPropsType & MapDispatchToProps
     }
 
     render() {
-
-
         return(
             <Profile {...this.props}
                      userStatus={this.props.userStatus}
