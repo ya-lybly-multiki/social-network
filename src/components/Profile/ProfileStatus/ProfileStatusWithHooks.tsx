@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 
 
 type PropsType = {
@@ -11,7 +11,9 @@ export const ProfileStatusWithHooks = (props: PropsType) => {
     const [editMode,setEditMode] = useState(false)
     const [status,setStatus] = useState(props.userStatus)
 
-
+    useEffect( ()=> {
+        setStatus(props.userStatus)
+    },[props.userStatus])
 
     const changeInputHandler = (e:ChangeEvent<HTMLInputElement>) => {
         setStatus(e.currentTarget.value)
@@ -22,11 +24,15 @@ export const ProfileStatusWithHooks = (props: PropsType) => {
         props.updateUserStatus(status)
     }
 
+    const onClickSpan = () => {
+        setEditMode(true)
+    }
+
     return (
         <div>
             {!editMode &&
                 <div>
-                    <span onDoubleClick={()=> {setEditMode(true)}} >
+                    <span onDoubleClick={onClickSpan} >
                         {props.userStatus || "-----"}
                     </span>
             </div>
