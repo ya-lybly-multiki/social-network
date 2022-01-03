@@ -47,7 +47,7 @@ let initialState :ProfilePageType  = {
         userStatus: ""
     }
 
-const ProfileReducer = (state = initialState, action: TsarType): ProfilePageType => {
+export const ProfileReducer = (state = initialState, action: TsarType): ProfilePageType => {
 
     switch (action.type) {
         case "ADD-POST":
@@ -79,6 +79,12 @@ const ProfileReducer = (state = initialState, action: TsarType): ProfilePageType
                 userStatus:action.userStatus
             }
         }
+        case "DELETE-POST": {
+            return  {
+                ...state,
+                posts: state.posts.filter(p => p.id !== action.id)
+            }
+        }
         default:return state
     }
 }
@@ -91,10 +97,13 @@ export type getUserStatusType = ReturnType<typeof getUserStatus>
 
 export type updateNewStatusType = ReturnType<typeof updateNewStatus>
 
+export type deletePostType = ReturnType<typeof deletePost>
+
 export type TsarType = addPostACType
     | setUserProfileType
     | getUserStatusType
     | updateNewStatusType
+    | deletePostType
 
 export const addPostAC = (text:string) => {
     return {
@@ -124,6 +133,13 @@ export const updateNewStatus = (userStatus:string) => {
        type:"UPDATE-NEW-STATUS",
        userStatus
    } as const
+}
+
+export const deletePost = (id:number) => {
+    return {
+        type: "DELETE-POST",
+        id
+    } as const
 }
 
 
