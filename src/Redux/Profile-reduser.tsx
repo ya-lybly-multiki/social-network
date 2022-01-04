@@ -1,11 +1,13 @@
 import {Dispatch} from "redux";
 import {profileAPI} from "../Api/ApiJs";
+import {setAppStatus} from "./App-reducer";
+import {handleServerNetworkError} from "../utils/ErrorHandler";
 
 
 export type postType = {
-    id:number
-    message:string
-    likeCounts:number
+    id: number
+    message: string
+    likeCounts: number
 }
 
 export type ProfileType = {
@@ -32,20 +34,19 @@ export type ProfileType = {
 
 export type ProfilePageType = {
     posts: postType[]
-    profile:ProfileType | null
-    userStatus:string
+    profile: ProfileType | null
+    userStatus: string
 }
 
 
-
-let initialState :ProfilePageType  = {
-        posts: [
-            {id: 1, message: "hello everybody", likeCounts: 12},
-            {id: 2, message: "its my first post", likeCounts: 13}
-        ],
-        profile:  null,
-        userStatus: ""
-    }
+let initialState: ProfilePageType = {
+    posts: [
+        {id: 1, message: "hello everybody", likeCounts: 12},
+        {id: 2, message: "its my first post", likeCounts: 13}
+    ],
+    profile: null,
+    userStatus: ""
+}
 
 export const ProfileReducer = (state = initialState, action: TsarType): ProfilePageType => {
 
@@ -59,39 +60,40 @@ export const ProfileReducer = (state = initialState, action: TsarType): ProfileP
             };
             return {
                 ...state,
-            posts:[...state.posts,{...newPost}]
+                posts: [...state.posts, {...newPost}]
             };
         case "SET-USER-PROFILE": {
             return {
                 ...state,
-                profile:action.newProfile
+                profile: action.newProfile
             }
         }
         case "GET-USER-STATUS": {
             return {
                 ...state,
-                userStatus:action.userId
+                userStatus: action.userId
             }
         }
         case "UPDATE-NEW-STATUS": {
-            return  {
+            return {
                 ...state,
-                userStatus:action.userStatus
+                userStatus: action.userStatus
             }
         }
         case "DELETE-POST": {
-            return  {
+            return {
                 ...state,
                 posts: state.posts.filter(p => p.id !== action.id)
             }
         }
-        default:return state
+        default:
+            return state
     }
 }
 
 export type addPostACType = ReturnType<typeof addPostAC>
 
-export type setUserProfileType = ReturnType<typeof setUserProfile>
+export type setUserProfileType = ReturnType<typeof getUserProfile>
 
 export type getUserStatusType = ReturnType<typeof getUserStatus>
 
@@ -105,7 +107,7 @@ export type TsarType = addPostACType
     | updateNewStatusType
     | deletePostType
 
-export const addPostAC = (text:string) => {
+export const addPostAC = (text: string) => {
     return {
         type: "ADD-POST",
         text
@@ -113,29 +115,28 @@ export const addPostAC = (text:string) => {
 }
 
 
-
-export const setUserProfile = (newProfile:ProfileType  ) => {
-  return {
-      type:"SET-USER-PROFILE",
-       newProfile
-  } as const
+export const getUserProfile = (newProfile: ProfileType) => {
+    return {
+        type: "SET-USER-PROFILE",
+        newProfile
+    } as const
 }
 
-export const getUserStatus = (userId:string) => {
+export const getUserStatus = (userId: string) => {
     return {
-        type:"GET-USER-STATUS",
+        type: "GET-USER-STATUS",
         userId
     } as const
 }
 
-export const updateNewStatus = (userStatus:string) => {
-   return {
-       type:"UPDATE-NEW-STATUS",
-       userStatus
-   } as const
+export const updateNewStatus = (userStatus: string) => {
+    return {
+        type: "UPDATE-NEW-STATUS",
+        userStatus
+    } as const
 }
 
-export const deletePost = (id:number) => {
+export const deletePost = (id: number) => {
     return {
         type: "DELETE-POST",
         id
@@ -143,31 +144,34 @@ export const deletePost = (id:number) => {
 }
 
 
-export const getStatus = (userId:string) => {
-    return (dispatch:Dispatch<TsarType>) => {
-        profileAPI.getStatus(userId)
-            .then(data => {
-                dispatch(getUserStatus(data))
-            })
+export const getStatus = (userId: string) => async (dispatch: Dispatch) => {
+    dispatch(setAppStatus('loading'))
+    try {
+        const response = await profileAPI.getStatus(userId);
+        dispatch(getUserStatus(response.data));
+        dispatch(setAppStatus('succeeded'))
+    } catch (e) {
+        handleServerNetworkError((e as Error), dispatch)
+    }
+
+}
+
+export const getUserProfilePage = (userId: string) => async (dispatch: Dispatch) => {
+    dispatch(setAppStatus('loading'))
+    try {
+        const res = await profileAPI.getUserProfile(userId)
+        dispatch(getUserProfile(res.data))
+        dispatch(setAppStatus('succeeded'))
+    } catch (e) {
+        handleServerNetworkError((e as Error), dispatch)
     }
 }
 
-export const getUserProfile = (userId:string) => {
-    return (dispatch: Dispatch<TsarType>) => {
-        profileAPI.getUserProfile(userId)
-            .then(data => {
-                dispatch(setUserProfile(data))
-            })
-    }
-}
-
-export const updateUserStatus = (userStatus:string) => {
-    return (dispatch:Dispatch<TsarType>) => {
-        profileAPI.updateUserStatus(userStatus).then(data => {
-            if(data.data.resultCode === 0) {
-                dispatch(updateNewStatus(userStatus))
-            }
-        })
+export const updateUserStatus = (userStatus: string) =>
+    async (dispatch: Dispatch) => {
+    const response = await profileAPI.updateUserStatus(userStatus);
+    if (response.data.resultCode === 0) {
+        dispatch(updateNewStatus(userStatus));
     }
 }
 

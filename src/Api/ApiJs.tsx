@@ -1,41 +1,22 @@
 import axios, {AxiosResponse} from "axios";
-import {UserType} from "../components/Users/Users";
-
-type DataUsersType = {
-    error: null | string
-    totalCount: number
-    items: Array<UserType>
-}
-type DataPostUserType = {
-    resultCode: number
-    messages: []
-    data: {}
-}
-type DataAuthType = {
-    data: {
-        id: number
-        login: string
-        email: string
-    },
-    messages: [],
-    fieldsErrors: [],
-    resultCode: number
-}
 
 type ResultCodeType = 0 | 1
 
-type DataPutUserProfileStatusType = {
-    data: {}
-    fieldsErrors: []
-    messages: []
-    resultCode: ResultCodeType
+export type ResponseType<T> = {
+    data: T
+    messages: Array<string>
+    fieldsErrors: Array<string>
+    resultCode: number
 }
 
-type DataLoginType = {
+
+export type DataLoginType = {
     resultCode: ResultCodeType
     messages: Array<string>,
     data: {
         userId: number
+        email:string
+        login:string
     }
 }
 
@@ -44,13 +25,6 @@ type DataPostRequestType = {
     password: string
     rememberMe: boolean
 }
-
-type DataLogoutType = {
-    resultCode: ResultCodeType
-    messages: Array<string>,
-    data: {}
-}
-
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
@@ -86,7 +60,7 @@ export const profileAPI = {
     },
     updateUserStatus(userStatus:string) {
        return  instance.put(`profile/status`, {userStatus})
-           .then(res => res.data)
+
     }
 }
 
