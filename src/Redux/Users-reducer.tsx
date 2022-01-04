@@ -1,6 +1,8 @@
 import {UserType} from "../components/Users/Users";
 import {usersAPI} from "../Api/ApiJs";
 import {Dispatch} from "redux";
+import {RequestStatusType} from "./App-reducer";
+import {handleServerAppError, handleServerNetworkError} from "../utils/ErrorHandler";
 
 export type UsersType = Array<UserType>
 
@@ -9,7 +11,7 @@ export type UserPageType = {
     pageSize: number
     totalUserCount: number
     currentPage: number
-    isFetching: boolean | null
+    isFetching: RequestStatusType | null
     followingInProgress: Array<number>
 }
 
@@ -18,7 +20,7 @@ let initialState: UserPageType = {
     pageSize: 5,
     totalUserCount: 16,
     currentPage: 1,
-    isFetching: true,
+    isFetching: 'idle',
     followingInProgress: []
 }
 
@@ -60,7 +62,7 @@ const UsersReducer = (state = initialState, action: GlobalACType): UserPageType 
         case "TOGGLE-IN-PROGRESS": {
             return {
                 ...state,
-                followingInProgress: action.isFetching
+                followingInProgress: action.disableButton === 'loading'
                     ? [...state.followingInProgress, action.userId]
                     : [...state.followingInProgress.filter(id => id !== action.userId)]
 
@@ -115,17 +117,17 @@ export const setTotalUsersCount = (usersCount: number) => {
     } as const
 }
 
-export const toggleIsFetching = (isFetching: boolean | null) => {
+export const toggleIsFetching = (isFetching: RequestStatusType | null) => {
     return {
         type: "TOGGLE-IS-FETCHING",
-        isFetching: isFetching
+         isFetching
     } as const
 }
 
-export const toggleInProgress = (isFetching: boolean | null, userId: number) => {
+export const toggleInProgress = (disableButton: RequestStatusType | null, userId: number) => {
     return {
         type: 'TOGGLE-IN-PROGRESS',
-        isFetching,
+        disableButton,
         userId
     } as const
 }
@@ -144,41 +146,44 @@ export type UnfollowType = ReturnType<typeof unFollowSuccess>
 
 export type setUsersACType = ReturnType<typeof setUsers>
 
-export const getUsers = (page: number, pageSize: number) => {
-    return (dispatch: Dispatch<GlobalACType>) => {
-        dispatch(toggleIsFetching(true));
-        dispatch(setCurrentPage(page))
-
-        usersAPI.getUsers(page, pageSize).then(data => {
-            dispatch(toggleIsFetching(false));
-            dispatch(setUsers(data.items));
-            dispatch(setTotalUsersCount(data.totalCount));
-        })
+export const getUsers = (page: number, pageSize: number) => async (dispatch: Dispatch) => {
+    dispatch(toggleIsFetching('loading'));
+    dispatch(setCurrentPage(page))
+    try {
+        const response = await usersAPI.getUsers(page, pageSize)
+            dispatch(toggleIsFetching('succeeded'));
+            dispatch(setUsers(response.items));
+            dispatch(setTotalUsersCount(response.data.totalUserCount));
+    } catch (error) {
+        handleServerNetworkError(error as Error,dispatch)
     }
+
 }
 
-export const follow = (userId:number) => {
-    return (dispatch: Dispatch<GlobalACType>) => {
-        dispatch(toggleInProgress(true,userId));
-        usersAPI.follow(userId)
-            .then(response => {
-                if(response.data.resultCode === 0) {
-                    dispatch(followSuccess(userId))
-                }
-                dispatch(toggleInProgress(false,userId));
-        })
+export const follow = (userId: number) => async (dispatch: Dispatch) => {
+    dispatch(toggleInProgress('loading', userId));
+    try {
+        const response = await usersAPI.follow(userId)
+        if (response.data.resultCode === 0) {
+            dispatch(followSuccess(userId))
+        }
+    } catch (error) {
+        dispatch(toggleInProgress('failed',userId))
     }
+    dispatch(toggleInProgress("succeeded", userId));
 }
-export const unFollow = (userId:number) => {
-    return (dispatch: Dispatch<GlobalACType>) => {
-        dispatch(toggleInProgress(true,userId));
-        usersAPI.unFollow(userId)
-            .then(response => {
-                if(response.data.resultCode === 0) {
-                    dispatch(unFollowSuccess(userId))
-                }
-                dispatch(toggleInProgress(false,userId));
-            })
+export const unFollow = (userId: number) => async (dispatch: Dispatch) => {
+    try {
+        const res = await usersAPI.follow(userId)
+        if (res.data.resultCode === 0) {
+            dispatch(toggleInProgress('succeeded', userId))
+        } else {
+            handleServerAppError(res.data, dispatch)
+        }
+    } catch (e) {
+        handleServerNetworkError((e as Error), dispatch)
+        dispatch(toggleInProgress('failed', userId))
+
     }
 }
 export default UsersReducer

@@ -23,7 +23,7 @@ let initialState: AuthType = {
 
 function AuthReducer(state = initialState, action: GlobalType) {
     switch (action.type) {
-        case "SET-USER-DATA":
+        case "SAMURAI-NETWORK/SET-USER-DATA":
             return {
                 ...state,
                 ...action.data,
@@ -37,11 +37,12 @@ type GlobalType = setUserDataType
 
 type setUserDataType = ReturnType<typeof setUserData>
 
-export const setUserData = (userId: number | null, email: string | null, login: string | null, isAuth:boolean) => {
+
+export const setUserData = (userId: number | null, email: string | null, login: string | null, isAuth: boolean) => {
     return {
-        type: "SET-USER-DATA",
+        type: "SAMURAI-NETWORK/SET-USER-DATA",
         data: {
-             userId,
+            userId,
             email,
             login,
             isAuth
@@ -62,22 +63,18 @@ export const getAuthUserData = (): ThunkType<GlobalType> => async (dispatch) => 
 
 export const login = (email: string, password: string, rememberMe: boolean): ThunkType<GlobalType> =>
     async (dispatch) => {
-        AuthApi.login(email, password, rememberMe)
-            .then(response => {
-                if (response.resultCode === 0) {
-                    dispatch(getAuthUserData())
-                }
-            })
-}
+        const response = await AuthApi.login(email, password, rememberMe)
+        if (response.resultCode === 0) {
+            await dispatch(getAuthUserData())
+        }
+    }
 
 export const logOut = (): ThunkType<GlobalType> =>
     async (dispatch) => {
-        AuthApi.logOut()
-            .then(response => {
-                if (response.resultCode === 0) {
-                    dispatch(setUserData(null,null,null,false))
-                }
-            })
+        const response = await AuthApi.logOut()
+        if (response.resultCode === 0) {
+            dispatch(setUserData(null, null, null, false))
+        }
     }
 
 export default AuthReducer;

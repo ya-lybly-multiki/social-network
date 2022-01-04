@@ -1,5 +1,5 @@
 import React from 'react';
-import {SubmitHandler, useForm} from "react-hook-form";
+import {useForm} from "react-hook-form";
 import {connect, useDispatch} from "react-redux";
 import {login} from "../../Redux/Auth-reducer";
 import {AppStateType} from "../../Redux/Redux-store";
@@ -18,7 +18,7 @@ function LoginForm (props:LoginPropsType)  {
 
    const dispatch = useDispatch()
 
-    const { register,  handleSubmit,reset, formState: { errors,isValid } } = useForm<FormDataType>({
+    const { register,  handleSubmit, formState: { errors,isValid } } = useForm<FormDataType>({
         mode:"all"
     });
 
