@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
-import {BrowserRouter, Route, withRouter,} from "react-router-dom";
+import {BrowserRouter, HashRouter, Route, withRouter,} from "react-router-dom";
 import music from "./components/Music/Music";
 import settings from "./components/Settings/Settings";
 import Friends from "./components/Friends/Friends";
@@ -12,11 +12,14 @@ import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import News from "./components/News/News";
 import LoginContainer from "./components/Login/LoginForm";
-import {connect} from "react-redux";
+import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "./Redux/AppReducer";
-import {AppStateType} from "./Redux/Redux-store";
+import store, {AppStateType} from "./Redux/Redux-store";
 import Preloader from "./components/utils/preloader/Preloader";
+
+
+
 
 
 
@@ -38,7 +41,7 @@ class App extends Component<MapDispatchToPropsType & MapStateToPropsType> {
         }
 
         return (
-            <BrowserRouter>
+
                 <div className="app__wrapper">
                     <HeaderContainer />
                     <Navbar/>
@@ -58,7 +61,7 @@ class App extends Component<MapDispatchToPropsType & MapStateToPropsType> {
                         <Route path='/Sidebar' component={Sidebar}/>
                     </div>
                 </div>
-            </BrowserRouter>
+
         );
     }
 }
@@ -70,9 +73,18 @@ const MapStateToProps = (state: AppStateType) => {
 
 }
 
-export default compose <React.ComponentType> (
+export const AppContainer = compose <React.ComponentType> (
     connect(MapStateToProps,{initializeApp}),
   withRouter
     ) (App)
 
+export const SamuraiJSApp = () => {
+   return (
+       <HashRouter>
+        <Provider store={store}>
+            <AppContainer />,
+        </Provider>
+    </HashRouter>
+   )
+}
 
