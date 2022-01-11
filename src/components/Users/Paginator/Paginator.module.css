@@ -1,0 +1,43 @@
+.paginator {
+    display: flex;
+}
+.paginator .numberPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #034bb6;
+    color: #034bb6;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0 10px 20px 0;
+    cursor: pointer;
+}
+.paginator .numberPage:hover, .paginator .selected {
+    background-color: #023b91;
+    color: white;
+}
+.paginator .arrowButton {
+    color: #023b91;
+    border: none;
+    background-color: inherit;
+    padding-bottom: 20px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.paginator .arrowButton:hover {
+    color: #6ca6ff;
+}
+.paginator {
+    margin: 10px;
+}
+.pageNumber {
+    padding: 2px;
+    border: 1px solid grey;
+}
+.selectedPage {
+    font-weight: bold;
+    color: black;
+}

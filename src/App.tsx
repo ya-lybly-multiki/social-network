@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
-import {BrowserRouter, HashRouter, Route, withRouter,} from "react-router-dom";
+import { HashRouter, Route, withRouter,} from "react-router-dom";
 import music from "./components/Music/Music";
 import settings from "./components/Settings/Settings";
 import Friends from "./components/Friends/Friends";

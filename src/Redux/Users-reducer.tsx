@@ -146,16 +146,31 @@ export type UnfollowType = ReturnType<typeof unFollowSuccess>
 
 export type setUsersACType = ReturnType<typeof setUsers>
 
+
+
+// export const getUsers = (page: number, pageSize: number) => {
+//     return (dispatch: Dispatch<GlobalACType>) => {
+//         dispatch(toggleIsFetching('loading'));
+//         dispatch(setCurrentPage(page))
+//
+//         usersAPI.getUsers(page, pageSize).then(data => {
+//             dispatch(toggleIsFetching('succeeded'));
+//             dispatch(setUsers(data.items));
+//             dispatch(setTotalUsersCount(data.totalCount));
+//         })
+//     }
+// }
+
 export const getUsers = (page: number, pageSize: number) => async (dispatch: Dispatch) => {
     dispatch(toggleIsFetching('loading'));
     dispatch(setCurrentPage(page))
     try {
-        const response = await usersAPI.getUsers(page, pageSize)
-            dispatch(toggleIsFetching('succeeded'));
-            dispatch(setUsers(response.items));
-            dispatch(setTotalUsersCount(response.data.totalUserCount));
-    } catch (error) {
-        handleServerNetworkError(error as Error,dispatch)
+        const res = await usersAPI.getUsers(page, pageSize);
+        dispatch(setUsers(res.items));
+        dispatch(setTotalUsersCount(res.totalCount));
+        dispatch(toggleIsFetching('succeeded'));
+    } catch (e) {
+        handleServerNetworkError((e as Error), dispatch);
     }
 
 }
