@@ -1,8 +1,6 @@
 import React from "react";
-import s from "./Users.module.css"
 import User from "./User/User";
-import styles from "./User/User.module.css"
-import {Paginator} from "./Paginator";
+import {Paginator} from "./Paginator/Paginator";
 
 
 type PropsType = {
