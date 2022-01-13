@@ -29,7 +29,6 @@ export const Paginator = ({currentPage, pageSize, totalUserCount, setCurrentPage
                 .map(p => {
                     return (
                         <span
-                            // className={currentPage === p ? styles.selectedPage : styles.pageNumber}
                             className={currentPage === p ? `${styles.numberPage} ${styles.selected}` : styles.numberPage}
                             key={p}
                             onClick={(e ) => {

@@ -17,10 +17,9 @@ type PropsType = {
 
 function User(props: PropsType) {
 
-
     const btnClass = props.user.followed ? styles.btnUnFollow : styles.btnFollow
     const defaultPhoto = props.user.photos.small !== null ?props.user.photos.small : UserPhoto
-   // const disabledBtn = props.followingInProgress.some(id => id === props.id)
+
 
     return (
 

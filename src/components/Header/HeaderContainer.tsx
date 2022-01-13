@@ -12,7 +12,6 @@ type MapStateToProps = {
 }
 
 type MapDispatchToPropsType = {
-
     logOut:()=> void
 }
 

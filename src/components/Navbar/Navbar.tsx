@@ -1,48 +1,26 @@
 import React from "react";
-import classes from './Navbar.module.css'
+import classes from './Navbar.module.scss'
 import {NavLink} from "react-router-dom";
-
+import {useSelector} from "react-redux";
+import {AppStateType} from "../../Redux/Redux-store";
+import {NavigationType} from "../../Redux/Navbar-reducer";
 
 
 function Navbar() {
 
-    // let sideBarElemnt = props.state.friends.map((s) =>
-    //     <Sidebar name={s.name} id={s.id} avatar={s.avatar}/>)
+    const navbar = useSelector<AppStateType,  Array<NavigationType> >
+    ( (state) => state.navigation.navigation)
+
+    const navLinkItems = navbar.map( n =>
+        <NavLink key={n.id} to={n.link}>{n.pageName}</NavLink> )
+
 
     return (
         <nav className={classes.nav}>
-            <ul>
-                <li className={classes.item}>
-                    <NavLink to='/Profile' activeClassName={classes.active}>Profile</NavLink>
-                </li>
-                <li className={classes.item}>
-                    <NavLink to='/Dialogs' activeClassName={classes.active}>Messages</NavLink>
-                </li>
-                <li className={classes.item}>
-                    <NavLink to='/Users' activeClassName={classes.active}>Users</NavLink>
-                </li>
-                <li className={`${classes.item} ${classes.active}`}>
-                    <NavLink to='/News'>News</NavLink>
-                </li>
-                <li className={classes.item}>
-                    <NavLink to='/Music'>Music</NavLink>
-                </li>
+            <div className={classes.nav__bottom}>
+                {navLinkItems}
+            </div>
 
-                <li className={classes.item}>
-                    <NavLink to='/Settings'>Settings</NavLink>
-                    <li/>
-                    <li className={classes.item}>
-                        <NavLink to='/Friends'>Friends</NavLink>
-                    </li>
-                    <li className={classes.item}>
-                        <NavLink to='/Sidebar'>
-                            <ul className={classes.slidebar__wrapper}>
-
-                            </ul>
-                        </NavLink>
-                    </li>
-                </li>
-            </ul>
         </nav>
     )
 }
