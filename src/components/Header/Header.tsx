@@ -1,6 +1,7 @@
 import React from "react";
-import classes from './Header.module.css';
+import classes from './Header.module.scss';
 import {NavLink} from "react-router-dom";
+import {Button} from "@mui/material";
 
 
 type PropsType = {
@@ -13,10 +14,14 @@ function Header({login,isAuth,logOut}:PropsType) {
     return (
         <header className={classes.header}>
             <div className={classes.headerWrapper}>
-                <img src='https://gohtml.ru/images/news/110--15-02-03--13-54-00.jpeg'/>
+               <h1>Facebook Killer</h1>
                 <div className={classes.headerLogin}>
-                    {isAuth ?  <div>{login} <button onClick={logOut}>Log out</button></div>
-                    : <NavLink to={"/login"}>Login</NavLink>}
+                    {isAuth ?  <div>{login} <Button onClick={logOut}>Log out</Button></div>
+                    : <NavLink to={"/login"}>
+                            <Button style={{color:"aqua"}}  size={"large"}>
+                                Login
+                            </Button>
+                            </NavLink>}
                 </div>
             </div>
         </header>

@@ -1,6 +1,7 @@
-import React, {ChangeEvent, useState} from 'react';
-import {Button} from "../Button/Button";
+import React, {ChangeEvent} from 'react';
+import styles from './textAreaForm.module.scss'
 import {useForm} from "react-hook-form";
+import {Button} from "@mui/material";
 
 
 type FormData = {
@@ -45,7 +46,7 @@ const TextAreaForm = ({nameBtn,
 
     return (
         <div>
-            <form onSubmit={onSubmit}>
+            <form className={styles.formWrapper} onSubmit={onSubmit}>
                 <textarea onKeyPress={onKey}  value={Text}   {...register("firstName",{
                     onChange: (e) => {changeHandler(e)},
                     required:"Поле обязательно к заполнению",
@@ -64,7 +65,11 @@ const TextAreaForm = ({nameBtn,
                     {errors?.firstName && <p>{errors?.firstName?.message || "Error!"}</p>}
 
                 <div>
-                    <Button type={"submit"} disabled={!isValid} callBack={handlerReset} >{nameBtn}</Button>
+                    <Button variant="contained"
+                            color={"success"}
+                            type={"submit"}
+                            disabled={!isValid}
+                            onClick={handlerReset}>add Post</Button>
                 </div>
             </form>
         </div>

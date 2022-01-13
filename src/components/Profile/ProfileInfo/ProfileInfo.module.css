@@ -2,3 +2,13 @@
     color: black;
     padding: 10px;
 }
+
+.photoBackGround {
+    background-image: url("../../../assets/images/maxresdefault.jpg");
+    border-radius: 15px;
+    height: 70%;
+    width: 100%;
+    background-position: center center;
+    background-size: cover;
+    overflow: hidden;
+}

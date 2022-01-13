@@ -6,6 +6,7 @@ import AuthReducer from "./Auth-reducer";
 import thunkMiddleware from "redux-thunk";
 import { reducer as formReducer } from 'redux-form'
 import appReducer from "./AppReducer";
+import {navbarReducer} from "./Navbar-reducer";
 
 let rootReducer = combineReducers({
     profilePage: ProfileReducer,
@@ -13,7 +14,8 @@ let rootReducer = combineReducers({
     usersPage: UsersReducer,
     auth: AuthReducer,
     form: formReducer,
-    app:appReducer
+    app:appReducer,
+    navigation: navbarReducer
 })
 
 

@@ -22,9 +22,7 @@ function LoginForm (props:LoginPropsType)  {
         mode:"all"
     });
 
-
     function onSubmit(data:FormDataType) {
-        console.log(data)
         dispatch(login(data.email,data.password,data.rememberMe))
     }
 
