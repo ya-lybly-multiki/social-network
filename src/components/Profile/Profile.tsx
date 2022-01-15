@@ -7,6 +7,8 @@ type PropsType = {
     profile:ProfileType | null
     userStatus:string
     updateUserStatus:(userStatus:string) => void
+    isOwner:boolean
+    savePhoto:(file:File)=> void
 }
 
 
@@ -14,7 +16,10 @@ function Profile(props:PropsType) {
 
     return (
         <div>
-            <ProfileInfo userStatus={props.userStatus}
+            <ProfileInfo
+                savePhoto={props.savePhoto}
+                isOwner={props.isOwner}
+                userStatus={props.userStatus}
                          updateUserStatus={props.updateUserStatus}
                          profile={props.profile}/>
             <MyPostContainer />

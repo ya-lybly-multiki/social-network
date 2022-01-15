@@ -3,17 +3,19 @@ import './App.css';
 import {HashRouter, withRouter,} from "react-router-dom";
 import {connect, Provider} from "react-redux";
 import {compose} from "redux";
-import {initializeApp} from "./Redux/AppReducer";
+
 import store, {AppStateType} from "./Redux/Redux-store";
 import Preloader from "./components/utils/preloader/Preloader";
 import MainContent from "./appContents/MainContent";
 import Navbar from "./components/Navbar/Navbar";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import {initializeApp} from "./Redux/App-reducer";
 
 
 
 type MapDispatchToPropsType = {
     getSetUserData: () => void
+    initializeApp: () => void
 }
 
 type MapStateToPropsType = {
@@ -24,6 +26,11 @@ type MapStateToPropsType = {
 
 class App extends Component<MapDispatchToPropsType & MapStateToPropsType> {
 
+
+
+    componentDidMount() {
+        this.props.initializeApp()
+    }
 
 
     render() {
@@ -47,10 +54,11 @@ class App extends Component<MapDispatchToPropsType & MapStateToPropsType> {
 
 const MapStateToProps = (state: AppStateType) => {
     return {
-        initialized: state.app.initialized
+        initialized: state.app.initialization
     }
 
 }
+
 
 export const AppContainer = compose<React.ComponentType>(
     connect(MapStateToProps, {initializeApp}),
