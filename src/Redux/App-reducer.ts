@@ -44,7 +44,7 @@ export const setAppStatus = (status: RequestStatusType) => {
     } as const
 }
 
-export const setInitial = () => {
+export const initializedSuccessAc = () => {
     return {
         type: 'APP/SET-APP-INITIAL',
     } as const
@@ -52,16 +52,17 @@ export const setInitial = () => {
 
 
 
-export const initializeApp = (): ThunkType<ActionsAppType> => async (dispatch) => {
+export const initializeApp = (): ThunkType<ActionsAppType> =>
+    async (dispatch) => {
     // getAuthUserData() возвращает promise
     dispatch(getAuthUserData()).then(res => {
-        dispatch(setInitial())
+        dispatch(initializedSuccessAc())
     })
 }
 
 export type setAppErrorType = ReturnType<typeof setAppError>
 export type setAppStatusType = ReturnType<typeof setAppStatus>
-export type setInitialType = ReturnType<typeof setInitial>
+export type setInitialType = ReturnType<typeof initializedSuccessAc>
 
 
 type ActionsAppType = setAppErrorType | setAppStatusType | setInitialType

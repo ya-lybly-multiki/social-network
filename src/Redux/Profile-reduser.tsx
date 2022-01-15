@@ -10,6 +10,11 @@ export type postType = {
     likeCounts: number
 }
 
+type PhotoType = {
+    "small": string
+    "large": string
+}
+
 export type ProfileType = {
     aboutMe: null | string
     contacts: {
@@ -26,10 +31,7 @@ export type ProfileType = {
     lookingForAJobDescription: null | string
     "fullName": null | string
     "userId": number
-    "photos": {
-        "small": string
-        "large": string
-    }
+    "photos": PhotoType
 }
 
 export type ProfilePageType = {
@@ -86,6 +88,12 @@ export const ProfileReducer = (state = initialState, action: TsarType): ProfileP
                 posts: state.posts.filter(p => p.id !== action.id)
             }
         }
+        case "SAVE-PHOTO": {
+            return {
+                ...state,
+            profile: {...state.profile, photos: action.photos} as ProfileType
+            }
+        }
         default:
             return state
     }
@@ -101,11 +109,14 @@ export type updateNewStatusType = ReturnType<typeof updateNewStatus>
 
 export type deletePostType = ReturnType<typeof deletePost>
 
+export type savePhotoSuccessType = ReturnType<typeof savePhotoSuccess>
+
 export type TsarType = addPostACType
     | setUserProfileType
     | getUserStatusType
     | updateNewStatusType
     | deletePostType
+    | savePhotoSuccessType
 
 export const addPostAC = (text: string) => {
     return {
@@ -113,7 +124,6 @@ export const addPostAC = (text: string) => {
         text
     } as const
 }
-
 
 export const getUserProfile = (newProfile: ProfileType) => {
     return {
@@ -143,6 +153,12 @@ export const deletePost = (id: number) => {
     } as const
 }
 
+export const savePhotoSuccess = (photos: PhotoType) => {
+    return {
+        type: "SAVE-PHOTO",
+        photos
+    } as const
+}
 
 export const getStatus = (userId: string) => async (dispatch: Dispatch) => {
     dispatch(setAppStatus('loading'))
@@ -172,6 +188,19 @@ export const updateUserStatus = (userStatus: string) =>
     const response = await profileAPI.updateUserStatus(userStatus);
     if (response.data.resultCode === 0) {
         dispatch(updateNewStatus(userStatus));
+    }
+}
+
+export const savePhoto = (file: File) =>
+    async (dispatch:Dispatch) => {
+        dispatch(setAppStatus('loading'))
+    try {
+        const data = await profileAPI.savePhoto(file)
+        dispatch(savePhotoSuccess(data.data.photos))
+        dispatch(setAppStatus('succeeded'))
+    }
+    catch (e) {
+        handleServerNetworkError((e as Error), dispatch)
     }
 }
 
