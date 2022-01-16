@@ -32,8 +32,9 @@ export const ProfileStatusWithHooks = (props: PropsType) => {
         <div>
             {!editMode &&
                 <div>
+                    <b style={{fontSize:"23px"}}>Status:</b>
                     <span onDoubleClick={onClickSpan} >
-                        {props.userStatus || "-----"}
+                        {props.userStatus || "add your status))"}
                     </span>
             </div>
             }

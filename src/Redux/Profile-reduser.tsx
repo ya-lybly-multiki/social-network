@@ -2,6 +2,7 @@ import {Dispatch} from "redux";
 import {profileAPI} from "../Api/ApiJs";
 import {setAppStatus} from "./App-reducer";
 import {handleServerNetworkError} from "../utils/ErrorHandler";
+import {BaseThunkType} from "./Redux-store";
 
 
 export type postType = {
@@ -15,18 +16,20 @@ type PhotoType = {
     "large": string
 }
 
+export type ContactsType = {
+    facebook: null | string
+    website: null | string
+    vk: null | string
+    twitter: null | string
+    instagram: null | string
+    "youtube": null | string
+    github: null | string
+    mainLink: null | string
+}
+
 export type ProfileType = {
     aboutMe: null | string
-    contacts: {
-        facebook: null | string
-        website: null | string
-        vk: null | string
-        twitter: null | string
-        instagram: null | string
-        "youtube": null | string
-        github: null | string
-        mainLink: null | string
-    }
+    contacts: ContactsType
     lookingForAJob: boolean
     lookingForAJobDescription: null | string
     "fullName": null | string
@@ -91,7 +94,7 @@ export const ProfileReducer = (state = initialState, action: TsarType): ProfileP
         case "SAVE-PHOTO": {
             return {
                 ...state,
-            profile: {...state.profile, photos: action.photos} as ProfileType
+                profile: {...state.profile, photos: action.photos} as ProfileType
             }
         }
         default:
@@ -172,7 +175,7 @@ export const getStatus = (userId: string) => async (dispatch: Dispatch) => {
 
 }
 
-export const getUserProfilePage = (userId: string) => async (dispatch: Dispatch) => {
+export const getUserProfilePage = (userId: number) => async (dispatch: Dispatch) => {
     dispatch(setAppStatus('loading'))
     try {
         const res = await profileAPI.getUserProfile(userId)
@@ -185,23 +188,40 @@ export const getUserProfilePage = (userId: string) => async (dispatch: Dispatch)
 
 export const updateUserStatus = (userStatus: string) =>
     async (dispatch: Dispatch) => {
-    const response = await profileAPI.updateUserStatus(userStatus);
-    if (response.data.resultCode === 0) {
-        dispatch(updateNewStatus(userStatus));
+        const response = await profileAPI.updateUserStatus(userStatus);
+        if (response.data.resultCode === 0) {
+            dispatch(updateNewStatus(userStatus));
+        }
     }
-}
 
 export const savePhoto = (file: File) =>
-    async (dispatch:Dispatch) => {
+    async (dispatch: Dispatch) => {
         dispatch(setAppStatus('loading'))
-    try {
-        const data = await profileAPI.savePhoto(file)
-        dispatch(savePhotoSuccess(data.data.photos))
-        dispatch(setAppStatus('succeeded'))
+        try {
+            const data = await profileAPI.savePhoto(file)
+            dispatch(savePhotoSuccess(data.data.photos))
+            dispatch(setAppStatus('succeeded'))
+        } catch (e) {
+            handleServerNetworkError((e as Error), dispatch)
+        }
     }
-    catch (e) {
-        handleServerNetworkError((e as Error), dispatch)
+
+export const saveProfile = (profile: ProfileType):ThunkType =>
+    async (dispatch:Dispatch,getState ) => {
+        const userId = getState().auth.userId
+        dispatch(setAppStatus('loading'))
+        try {
+            const data = await profileAPI.saveProfile(profile)
+            if (userId) getUserProfilePage(userId)
+            dispatch(setAppStatus('succeeded'))
+        }
+        catch (e) {
+            handleServerNetworkError((e as Error), dispatch)
+        }
     }
-}
+
+
+
+type ThunkType = BaseThunkType<TsarType>
 
 export default ProfileReducer

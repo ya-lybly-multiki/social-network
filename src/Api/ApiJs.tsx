@@ -1,4 +1,5 @@
 import axios, {AxiosResponse} from "axios";
+import {ProfileType} from "../Redux/Profile-reduser";
 
 type ResultCodeType = 0 | 1
 
@@ -50,7 +51,7 @@ export const usersAPI = {
 }
 
 export const profileAPI = {
-    getUserProfile (userId:string) {
+    getUserProfile (userId:number) {
         return instance.get(`profile/` + userId)
             .then(response => response.data)
     },
@@ -70,6 +71,9 @@ export const profileAPI = {
                 'Content-Type' : 'multipart/form-data'
             }
         }).then(res => res.data)
+    },
+    saveProfile(profile:ProfileType) {
+        return instance.put(`profile`,profile)
     }
 }
 

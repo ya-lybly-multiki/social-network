@@ -120,7 +120,7 @@ export const setTotalUsersCount = (usersCount: number) => {
 export const toggleIsFetching = (isFetching: RequestStatusType | null) => {
     return {
         type: "TOGGLE-IS-FETCHING",
-         isFetching
+        isFetching
     } as const
 }
 
@@ -147,20 +147,6 @@ export type UnfollowType = ReturnType<typeof unFollowSuccess>
 export type setUsersACType = ReturnType<typeof setUsers>
 
 
-
-// export const getUsers = (page: number, pageSize: number) => {
-//     return (dispatch: Dispatch<GlobalACType>) => {
-//         dispatch(toggleIsFetching('loading'));
-//         dispatch(setCurrentPage(page))
-//
-//         usersAPI.getUsers(page, pageSize).then(data => {
-//             dispatch(toggleIsFetching('succeeded'));
-//             dispatch(setUsers(data.items));
-//             dispatch(setTotalUsersCount(data.totalCount));
-//         })
-//     }
-// }
-
 export const getUsers = (page: number, pageSize: number) => async (dispatch: Dispatch) => {
     dispatch(toggleIsFetching('loading'));
     dispatch(setCurrentPage(page))
@@ -183,7 +169,7 @@ export const follow = (userId: number) => async (dispatch: Dispatch) => {
             dispatch(followSuccess(userId))
         }
     } catch (error) {
-        dispatch(toggleInProgress('failed',userId))
+        dispatch(toggleInProgress('failed', userId))
     }
     dispatch(toggleInProgress("succeeded", userId));
 }
